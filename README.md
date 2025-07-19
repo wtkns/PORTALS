@@ -212,3 +212,4 @@ op('str{chan}')
 | \|   \|   \|   \|<br>\|---\|---\|---\|<br>\|43\|F#1\|Cls'dHihat\|<br>\|46\|A#1\|OpenHihat\|<br>\|49\|C#2\|CYmbal\|<br>\|56\|G#2\|CowBell\|<br>\|**39**\|**D#1**\|**handClaP**\|<br>\|**37**\|**C#1**\|**RimShot**\|<br>\|**50**\|**D2**\|**HiTom**\|<br>\|**47**\|**B1**\|**MidTom**\|<br>\|**43**\|**G1**\|**LowTom**\|<br>\|38\|D1\|SnareDrum\|<br>\|36\|C1\|BassDrum\| | \|   \|   \|   \|<br>\|---\|---\|---\|<br>\|42\|F#1\|Cls'dHihat\|<br>\|46\|A#1\|OpenHihat\|<br>\|49\|C#2\|CYmbal\|<br>\|56\|G#2\|CowBell\|<br>\|**70**\|**A#3**\|**MAracas**\|<br>\|**75**\|**D#4**\|**CLaves**\|<br>\|**62**\|**D3**\|**HiConga**\|<br>\|**63**\|**D#3**\|**MidConga**\|<br>\|**64**\|**E3**\|**LowConga**\|<br>\|38\|D1\|SnareDrum\|<br>\|36\|C1\|BassDrum\| |
 
 # PORTALS
+19-07-2025
