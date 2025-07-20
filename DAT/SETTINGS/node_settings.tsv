@@ -1,4 +1,3 @@
-asset_path  I:\PORTALS\PORTALS
-video_path  I:\PORTALS\VIDEOS\DEMO
-pattern_file I:\PORTALS\PORTALS\patternfile.tsv
-midi_settings I:\PORTALS\PORTALS\SETTINGS\midi_settings.tsv
+node	asset_path	video_path
+DEVJW	I:\PORTALS\PORTALS\	I:\PORTALS\PORTALS\
+DEVDYL	G:\Shared drives\120 - UTOPIAN\010-touchdesigner\	G:\Shared drives\120 - UTOPIAN\010-touchdesigner\Portals\Movie
