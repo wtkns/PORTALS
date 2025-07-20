@@ -15,6 +15,7 @@ class StartupExt:
         self.ownerComp = ownerComp
 
     def addDependenciesToPath(self):
+        op.LOG.Log('STARTUP: addDependenciesToPath()')
         dep_path = f'{project.folder}/DEP/PYTHON'
         norm_dep_path = os.path.normpath(dep_path)
 
@@ -24,19 +25,12 @@ class StartupExt:
         else:
             op.LOG.Log(f'EXISTS: {norm_dep_path} in sys.path')
 
-    def createSessionLogFile(self):
-        op.LOG.CreateLogFile()
-
     def Startup(self):
+        op.LOG.CreateLogFile()
         op.LOG.Log('STARTUP: Startup initiated')
- 
-        op.LOG.Log('STARTUP: addDependenciesToPath()')
-        self.addDependenciesToPath()
- 
-        op.LOG.Log('STARTUP: createSessionLogFile()')
-        self.createSessionLogFile()
- 
-        op.LOG.Log('STARTUP: Setting up settings')
-        op.SETTINGS.ConfigSettings()
         
+        self.addDependenciesToPath()
+        op.SETTINGS.ConfigSettings()
+
         op.LOG.Log('STARTUP: Startup Completed')
+        op.LOG.Log('+++++++++++++++++++++++++++++++++++++++++++++++')
