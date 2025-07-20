@@ -213,6 +213,10 @@ op('str{chan}')
 
 
 framework inspo: Noah Norman https://youtu.be/nQT7EhYCVg0?si=dsdZKY6UBHnZ7C-W
+git into it: Matthew Ragan: https://matthewragan.com/2017/12/03/touchdesigner-working-styles-git/
+details on extensions: https://derivative.ca/UserGuide/Extensions
+
 
 # PORTALS
 19-07-2025
+TD2025.30060

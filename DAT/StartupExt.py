@@ -1,13 +1,3 @@
-"""
-Extension classes enhance TouchDesigner components with python. An
-extension is accessed via ext.ExtensionClassName from any operator
-within the extended component. If the extension is promoted via its
-Promote Extension parameter, all its attributes with capitalized names
-can be accessed externally, e.g. op('yourComp').PromotedFunction().
-
-Help: search "Extensions" in wiki
-"""
-
 from TDStoreTools import StorageManager
 import TDFunctions as TDF
 
@@ -27,12 +17,18 @@ class StartupExt:
     def addDependenciesToPath(self):
         dep_path = f'{project.folder}/DEP/PYTHON'
         norm_dep_path = os.path.normpath(dep_path)
-        op.LOG.Log(f'adding {norm_dep_path} to sys path')
 
         if norm_dep_path not in sys.path:
-            op.LOG.Log(f'adding {norm_dep_path} to sys path')
+            op.LOG.Log(f'ADDING: {norm_dep_path} to sys.path')
             sys.path.insert(0, norm_dep_path)
+        else:
+            op.LOG.Log(f'EXISTS: {norm_dep_path} in sys.path')
+    
+    def createSessionLogFile(self)
+        op.LOG.CreateLogFile()
 
     def Startup(self):
         self.addDependenciesToPath()
-        op.LOG.Log('startupExt.Startup()')
+        op.LOG.CreateSessionLogFile()
+        op.LOG.Log('Startup Completed')
+

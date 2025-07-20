@@ -1,0 +1,13 @@
+midi_channel	window	frame	layer	section	trigger_step	loop_count	mod_function	mod_values
+kick	0	1	2	intro	8	5	mirror	"intro kick mirror"
+snare	0	2	2	intro	2	5	shuffle	"intro snare shuffle"
+clap	0	3	2	intro	7	5	invert	"intro clap invert"
+kick	0	1	2	intro	1	5	pulse	"intro kick pulse"
+snare	0	2	2	intro	1	5	mirror	"intro snare mirror"
+clap	0	3	2	intro	1	5	shuffle	"intro clap shuffle"
+kick	0	1	2	outro	8	5	mirror	"outro kick mirror"
+snare	0	2	2	outro	2	5	shuffle	"outro snare shuffle"
+clap	0	3	2	outro	7	5	invert	"outro clap invert"
+kick	0	1	2	outro	1	5	pulse	"outro kick pulse"
+snare	0	2	2	outro	1	5	mirror	"outro snare mirror"
+clap	0	3	2	outro	1	5	mirror	"outro clap mirror"
