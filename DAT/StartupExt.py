@@ -24,11 +24,11 @@ class StartupExt:
         else:
             op.LOG.Log(f'EXISTS: {norm_dep_path} in sys.path')
     
-    def createSessionLogFile(self)
+    def createSessionLogFile(self):
         op.LOG.CreateLogFile()
 
     def Startup(self):
         self.addDependenciesToPath()
-        op.LOG.CreateSessionLogFile()
+        self.createSessionLogFile()
         op.LOG.Log('Startup Completed')
 

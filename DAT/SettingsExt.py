@@ -38,11 +38,11 @@ class SettingsExt:
                 f'running {node}, unknown workstation. Config NODE in portals.bat')
 
         self.AssetPath = self.nodeSettings[node, 'asset_path'].val
-        op.LOG.Log(f'Settings: AssetPath {self.AssetPath}")
+        op.LOG.Log(f'Settings: AssetPath {self.AssetPath}')
         
         self.VideoPath = self.nodeSettings[node, 'video_path'].val
-        op.LOG.Log(f'Settings: VideoPath {self.VideoPath}")
+        op.LOG.Log(f'Settings: VideoPath {self.VideoPath}')
 
         self.PatternFile = self.nodeSettings[node, 'pattern_file'].val
-        op.LOG.Log(f'Settings: PatternFile {self.PatternFile}")
+        op.LOG.Log(f'Settings: PatternFile {self.PatternFile}')
         
