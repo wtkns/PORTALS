@@ -1,3 +1,6 @@
+# per machine changes not tracked
+BAT/portals.bat
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
