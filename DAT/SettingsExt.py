@@ -18,7 +18,7 @@ class SettingsExt:
                            dependable=True, readOnly=False)
 
     def ConfigSettings(self):
-        op.LOG.Log("Settings: running ConfigSettings()")
+        op.LOG.Log("SETTINGS: ConfigSettings()")
         node = var('NODE')
 
         if node == 'DEVJW':
