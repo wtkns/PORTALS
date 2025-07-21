@@ -25,6 +25,10 @@ class SettingsExt:
             op.LOG.Log(f'SETTINGS: Hello james, running {node}.')
             # do james things here
 
+        elif node == 'DEVJWL':
+            op.LOG.Log(f'SETTINGS: Hello james, running {node} on your laptop.')
+            # do dylan things here
+
         elif node == 'DEVDY':
             op.LOG.Log(f'SETTINGS: Hello Dylan, running {node}.')
             # do dylan things here
