@@ -12,14 +12,10 @@ class VideoLibraryExt:
     def __init__(self, ownerComp):
         # The component to which this extension is attached
         self.ownerComp = ownerComp
-
+        self.FileList = op('file_list')
+        
         # properties
-        TDF.createProperty(self, 'FileCount', value=0, dependable=True,
+        TDF.createProperty(self, 'FileCount', value=self.FileList.numRows, dependable=True,
                            readOnly=False)
-        self.FileCount = len(self.FileList)-1
 
-    def myFunction(self, v):
-        debug(v)
-
-    def PromotedFunction(self, v):
-        debug(v)
+        

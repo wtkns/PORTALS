@@ -212,11 +212,39 @@ op('str{chan}')
 | \|   \|   \|   \|<br>\|---\|---\|---\|<br>\|43\|F#1\|Cls'dHihat\|<br>\|46\|A#1\|OpenHihat\|<br>\|49\|C#2\|CYmbal\|<br>\|56\|G#2\|CowBell\|<br>\|**39**\|**D#1**\|**handClaP**\|<br>\|**37**\|**C#1**\|**RimShot**\|<br>\|**50**\|**D2**\|**HiTom**\|<br>\|**47**\|**B1**\|**MidTom**\|<br>\|**43**\|**G1**\|**LowTom**\|<br>\|38\|D1\|SnareDrum\|<br>\|36\|C1\|BassDrum\| | \|   \|   \|   \|<br>\|---\|---\|---\|<br>\|42\|F#1\|Cls'dHihat\|<br>\|46\|A#1\|OpenHihat\|<br>\|49\|C#2\|CYmbal\|<br>\|56\|G#2\|CowBell\|<br>\|**70**\|**A#3**\|**MAracas**\|<br>\|**75**\|**D#4**\|**CLaves**\|<br>\|**62**\|**D3**\|**HiConga**\|<br>\|**63**\|**D#3**\|**MidConga**\|<br>\|**64**\|**E3**\|**LowConga**\|<br>\|38\|D1\|SnareDrum\|<br>\|36\|C1\|BassDrum\| |
 
 
+
+
+## PORTALS Dev Notes
+19-07-2025
+TD2025.30060
+
 framework inspo: Noah Norman https://youtu.be/nQT7EhYCVg0?si=dsdZKY6UBHnZ7C-W
 git into it: Matthew Ragan: https://matthewragan.com/2017/12/03/touchdesigner-working-styles-git/
 details on extensions: https://derivative.ca/UserGuide/Extensions
 
+## Pythonic Extensions 
 
-# PORTALS
-19-07-2025
-TD2025.30060
+### Parameters:
+Controls exposed on parameter page of components, script ops and c++ ops. 
+(easiest way to create: using the RMB -> Customize... dialog on any component or Script Operator.)
+    Naming: Uppercase first letter ONLY, NO underscores
+    Documentation: https://derivative.ca/UserGuide/Custom_Parameters 
+    Declaration:    
+        baseOp = op.VIDEOLIBRARY
+        newPage = baseOp.appendCustomPage('Controls')
+        newTuplet = newPage.appendPulse('Startsearch', label='Click to Start Search')
+
+#### Internal Parameters:
+Only available inside the component. Details: https://docs.derivative.ca/Internal_Parameters
+
+
+### Attributes:
+Standard Python variables directly associated with an object's instance
+
+### Properties:
+like attributes but they have accessor functions (getter, setter, deleter).
+    Naming: Capitalized to be promoted. lowercase for internal only.
+    Documentation: https://docs.derivative.ca/Extensions#Python_Properties
+    Declaration:
+        TDF.createProperty(self, 'MyProperty', value=0, dependable=True,
+						   readOnly=True)
