@@ -5,8 +5,6 @@ import TDFunctions as TDF
 import random
 from moviepy.video.io.VideoFileClip import VideoFileClip
 
-
-
 class VideoLibraryExt:
     """
     VideoLibraryExt description
@@ -42,6 +40,4 @@ class VideoLibraryExt:
         except Exception as e:
             print(f"Error getting duration for {video_path}: {e}")
             return None
-
-
-
+        
