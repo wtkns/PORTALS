@@ -1,5 +1,5 @@
 @echo off
-set NODE=DEVJWL
+set NODE=DEVJW
 
 cd ..
 start code .

@@ -207,7 +207,7 @@ to ref channel
 op('str{chan}')
 
 
-|                                                                                                                                                                                                                                                                                                                                                                           |                                                                                                                                                                                                                                                                                                                                                                                |
+                                                                                                                                                                                                                                                                             |                                                                                                                                                                                                                                                                                                                                                                                |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | \|   \|   \|   \|<br>\|---\|---\|---\|<br>\|43\|F#1\|Cls'dHihat\|<br>\|46\|A#1\|OpenHihat\|<br>\|49\|C#2\|CYmbal\|<br>\|56\|G#2\|CowBell\|<br>\|**39**\|**D#1**\|**handClaP**\|<br>\|**37**\|**C#1**\|**RimShot**\|<br>\|**50**\|**D2**\|**HiTom**\|<br>\|**47**\|**B1**\|**MidTom**\|<br>\|**43**\|**G1**\|**LowTom**\|<br>\|38\|D1\|SnareDrum\|<br>\|36\|C1\|BassDrum\| | \|   \|   \|   \|<br>\|---\|---\|---\|<br>\|42\|F#1\|Cls'dHihat\|<br>\|46\|A#1\|OpenHihat\|<br>\|49\|C#2\|CYmbal\|<br>\|56\|G#2\|CowBell\|<br>\|**70**\|**A#3**\|**MAracas**\|<br>\|**75**\|**D#4**\|**CLaves**\|<br>\|**62**\|**D3**\|**HiConga**\|<br>\|**63**\|**D#3**\|**MidConga**\|<br>\|**64**\|**E3**\|**LowConga**\|<br>\|38\|D1\|SnareDrum\|<br>\|36\|C1\|BassDrum\| |
 
@@ -222,7 +222,7 @@ framework inspo: Noah Norman https://youtu.be/nQT7EhYCVg0?si=dsdZKY6UBHnZ7C-W
 git into it: Matthew Ragan: https://matthewragan.com/2017/12/03/touchdesigner-working-styles-git/
 details on extensions: https://derivative.ca/UserGuide/Extensions
 
-## Pythonic Extensions 
+## 7-21 Pythonic Extensions 
 
 ### Parameters:
 Controls exposed on parameter page of components, script ops and c++ ops. 
@@ -248,3 +248,17 @@ like attributes but they have accessor functions (getter, setter, deleter).
     Declaration:
         TDF.createProperty(self, 'MyProperty', value=0, dependable=True,
 						   readOnly=True)
+
+
+
+## 7-22 add external python dependencies
+https://derivative.ca/community-post/introducing-touchdesigner-python-environment-manager-tdpyenvmanager/72024
+
+see also: https://docs.derivative.ca/Experimental:Palette:tdPyEnvManager
+
+eg. add VideoLibraryExt to the owner component
+
+via Palette> tdPyEnvManager:
+in OP.tdPyEnvManager pulse Open CLI
+pip install moviepy
+etc.                                                                              
