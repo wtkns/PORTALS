@@ -231,9 +231,9 @@ op('str{chan}')
 38 - D1 - SnareDrum
 36 - C1 - BassDrum
 
-## PORTALS Dev Notes
+# PORTALS Dev Notes
 
-19-07-2025
+## 7/19 TD and Python Extensions
 TD2025.30060
 
 framework inspo: Noah Norman <https://youtu.be/nQT7EhYCVg0?si=dsdZKY6UBHnZ7C-W>
@@ -283,5 +283,60 @@ in OP.tdPyEnvManager pulse Open CLI
 pip install moviepy
 etc.
 
+
+## 7/23 review Dataclass and YAML for score/pattern file
+
 ![state diagram showing flow of control](DOC/IMAGES/state_diagram.png)
 
+
+# YAML Pattern File prototype:
+
+```yaml
+# Track Configuration
+config:
+  track_name: "JEMAIN"
+  media_folder: "../VIDEOS/JEMAIN"
+  output_resolution: [1920, 1080]
+  audio_device: "ASIO4ALL"
+  midi_device: "LoopBE1"
+  midi_channel: 10
+
+# MIDI Note Name mapping
+midi_map:
+  kick: ch10n37
+  snare: ch10n39
+  hihat: ch10n43
+
+# Patterns
+pattern_sections:
+  - section: "01_INTRO" # video subfolder name
+    duration_beats: 16
+    parameters:
+      feedback_amount: 0.1 # Range 0.0-1.0
+      color_shift_speed: 0.05 # Range 0.0-0.2
+      particle_density: 100 # Range 50-500
+      effect_blend: [0.2, 0.5] # Min/Max range for performer control
+
+  - section: "02_PART_ONE"
+    duration_beats: 32
+    parameters:
+      pulse_frequency: 4 # Range 2-8
+      color_palette: "WarmBlues"
+      distortion_level: [0.1, 0.8]
+      spatial_audio_pan: 0.5 # Center
+
+  - section: "03_PART_TWO"
+    duration_beats: 8
+    parameters:
+      chaos_intensity: 0.9 # Range 0.5-1.0
+      glitch_rate: 0.7 # Range 0.0-1.0
+      feedback_reverb: 0.8
+      tempo_multiplier: [1.0, 2.0] # Speed up/slow down entire section
+
+  - section: "04_OUTRO"
+    duration_beats: 20
+    parameters:
+      dissolve_speed: 0.02
+      audio_fade_out_time: 5 # seconds
+
+```
