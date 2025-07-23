@@ -286,7 +286,7 @@ etc.
 
 ## 7/23 review Dataclass and YAML for score/pattern file
 
-![state diagram showing flow of control](DOC/IMAGES/state_diagram.jpg)
+![state diagram showing flow of control](DOC/IMAGES/state_diagram.png)
 
 
 # YAML Pattern File prototype:
