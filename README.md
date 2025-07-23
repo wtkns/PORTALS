@@ -282,3 +282,6 @@ via Palette> tdPyEnvManager:
 in OP.tdPyEnvManager pulse Open CLI
 pip install moviepy
 etc.
+
+![state diagram showing flow of control](DOC\IMAGES\state_diagram.png)
+
