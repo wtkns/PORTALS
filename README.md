@@ -291,6 +291,9 @@ etc.
 
 # YAML Pattern File prototype:
 
+| Midi Channel | Video Channel | Step Trigger | Section Trigger | Repeats | Transform Key | Transformation Values |
+| 1 (Kick)     | A1V           | 2            | 9               | 16      | Scale         | `StartScale:1, EndScale:0.8, Duration:0.1` |
+
 ```yaml
 # Track Configuration
 config:
@@ -307,7 +310,7 @@ midi_map:
   snare: ch10n39
   hihat: ch10n43
 
-# Patterns
+# Sections / Patterns
 pattern_sections:
   - section: "01_INTRO" # video subfolder name
     duration_beats: 16
@@ -316,14 +319,39 @@ pattern_sections:
       color_shift_speed: 0.05 # Range 0.0-0.2
       particle_density: 100 # Range 50-500
       effect_blend: [0.2, 0.5] # Min/Max range for performer control
+      # Video channel media defaults
+      A1V: fadeup_air.mov
+      A1M: blank.svg
+      B1V: fadeup_clouds.mov
+      B1M: blank.svg
+      C1V: fadeup_water.mov
+      C1M: blank.svg
+
+    patterns: # for Section 01_INTRO
+      kick: # this is the triggering note from midi_map
+        video_channel: A1V
+        step_trigger: 2
+        repeats: 16
+        transform: 
+          parameter: 'TRANSPARENCY'
+          start: 0.0
+          end: 1.0
+          duration: 1
+      snare: # this is the triggering note from midi_map
+        video_channel: B1V
+        step_trigger: 2
+        repeats: 16
+        transform: 
+          parameter: 'SCALE'
+          start: 1
+          end: 0.5
+          duration: 1
 
   - section: "02_PART_ONE"
     duration_beats: 32
     parameters:
       pulse_frequency: 4 # Range 2-8
-      color_palette: "WarmBlues"
       distortion_level: [0.1, 0.8]
-      spatial_audio_pan: 0.5 # Center
 
   - section: "03_PART_TWO"
     duration_beats: 8
