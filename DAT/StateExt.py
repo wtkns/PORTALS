@@ -13,12 +13,12 @@ class StateExt:
 		TDF.createProperty(self, 'State', value='uninit', dependable=True,
 						   readOnly=False)
 
-	# def handleSetStateInit(self):
-	# 	op.LOG.Log('STATE: initState()')
-	# 	# Initialize the state of the component
-	# 	self.State = 'INIT'
-	# 	op.CONTROLPANEL.SCOREBROWSER.openViewer( )  
-	# 	op.LOG.Log('STATE: Component initialized to INIT state')
+	def handleSetStateInit(self):
+		op.LOG.Log('STATE: initState()')
+		# Initialize the state of the component
+		self.State = 'INIT'
+		op.CONTROLPANEL.OpenScoreBrowser()
+		op.LOG.Log('STATE: Component initialized to INIT state')
 
 
 	def handleSetState(self, state):
