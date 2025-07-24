@@ -1,6 +1,5 @@
 # PORTALS: **Passage Oracle for Realtime Transformation And Luminous States.**
-
-Specification for a real-time performance sequencer for transforming and compositing multichannel video.
+WIP Specification for a real-time performance sequencer for transforming and compositing multichannel video.
 
 <https://youtu.be/3JDeF_KNhiE>
 
