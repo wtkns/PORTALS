@@ -34,3 +34,5 @@ class StartupExt:
 
         op.LOG.Log('STARTUP: Startup Completed')
         op.LOG.Log('+++++++++++++++++++++++++++++++++++++++++++++++')
+        op.STATE.Set('INIT')
+        
