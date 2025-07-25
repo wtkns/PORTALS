@@ -100,7 +100,7 @@ class VideoLibraryExt:
                            readOnly=False)
 
         my_playlist = self.VideoPlaylist
-        my_playlist.populate_videos()
+        # my_playlist.populate_videos()
         
     def GetRandomVideo(self):
         # op.VIDEOLIBRARY.GetRandomVideo()
