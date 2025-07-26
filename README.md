@@ -367,3 +367,28 @@ pattern_sections:
       audio_fade_out_time: 5 # seconds
 
 ```
+
+
+- # Open TD File >
+	- ## INIT settings
+	- ## INIT State
+	- ## Open Control Panel
+	- ### Open Score file
+		- #### INITIALIZE
+			- ##### Video Library
+			- ##### MIDI Map
+			- ##### Pattern
+				- ###### Parse Sections
+			- ##### Video Players
+				- ###### Video Files
+				- ###### Mask Files
+			- ##### Video Bus
+				- ###### Transform Defaults
+	- ### Play Pattern
+		- #### Start:
+			- ##### MIDI Listener
+			- ##### Video Players
+			- ##### Video Bus
+		- #### Next Section
+			- ##### Update MIDI Listener
+      
