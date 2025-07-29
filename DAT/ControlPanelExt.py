@@ -12,43 +12,18 @@ class ControlPanelExt:
     def __init__(self, ownerComp):
         # The component to which this extension is attached
         self.ownerComp = ownerComp
-        self.scoreBrowser = op('score_browser')
+        self.scoreFileBrowser = op('score_file_browser')
+        self.scoreBrowserContainer = op('score_browser_container')
 
 
     def OpenScoreBrowser(self):
-        self.scoreBrowser.openViewer()
+        self.scoreBrowserContainer.openViewer()
         debug("open score browse")
 
     def HandleLoadButton(self):
         """
         Handle the load button click event.
         """
-        debug(op.CONTROLPANEL.ScoreFileBrowser)
+        op.SCORE.LoadScore(self.scoreFileBrowser.par.Value0.val)
         
-        # op.LOG.log("Load button clicked.")
-        # op.LOG.log(op.CONTROLPANEL.ScoreFileBrowser)
-
-        # if button == 'load':
-        #     scoreName = self.scoreBrowser.getSelectedScoreName()
-        #     if scoreName:
-        #         self.LoadScore(scoreName)
-        #     else:
-        #         debug("No score selected to load.")
-        # else:
-        #     debug(f"Unhandled button: {button}")
-            
         
-    # def loadScore(self, scorePath):
-    #     """
-    #     Load a score by name.
-    #     """
-    #     if not scoreName:
-    #         return
-
-    #     # Load the score from the storage
-    #     score = StorageManager.load(scoreName)
-    #     if score:
-    #         self.scoreBrowser.setScore(score)
-    #         debug(f"Loaded score: {scoreName}")
-    #     else:
-    #         debug(f"Score not found: {scoreName}")

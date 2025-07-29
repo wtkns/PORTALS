@@ -1,15 +1,18 @@
 # Track Configuration
-name: JEMAIN
+config:
+  name: JEMAIN
 
-root: ../VIDEOS/JEMAIN
-output_resolution: [1920, 1080]
-audio_device: "ASIO4ALL"
-midi_device: "LoopBE1"
-midi_channel: 10
+  root: ../VIDEOS/JEMAIN
+  output_resolution: [1920, 1080]
+  audio_device: "ASIO4ALL"
+  midi_device: "LoopBE1"
+  midi_channel: 10
 
-# MIDI Note<>Name mapping
-midi_map:
-  Tr01: ch10n37 # C#2 (kick on DM)
-  Tr02: ch10n39 # D#2 (snare on DM)
-  Tr03: ch10n42 # F#2 (HH on DM)
+  # MIDI Note<>Name mapping
+  midi_map:
+    Tr01: ch10n37 # C#2 (kick on DM)
+    Tr02: ch10n39 # D#2 (snare on DM)
+    Tr03: ch10n42 # F#2 (HH on DM)
 
+score:
+  
