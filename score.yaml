@@ -2,7 +2,7 @@
 config:
   name: JEMAIN
 
-  root: ../VIDEOS/JEMAIN
+  root: I:\PORTALS\SCORES\JEMAIN
   output_resolution: [1920, 1080]
   audio_device: "ASIO4ALL"
   midi_device: "LoopBE1"
@@ -14,5 +14,15 @@ config:
     Tr02: ch10n39 # D#2 (snare on DM)
     Tr03: ch10n42 # F#2 (HH on DM)
 
-score:
-  
+sections:
+  - section: 01_Intro
+    video_folder: I:\PORTALS\SCORES\JEMAIN\01_Intro
+      
+  - section: 02_Section_A
+    video_folder: I:\PORTALS\SCORES\JEMAIN\02_Section_A
+
+  - section: 03_Section_B
+    video_folder: I:\PORTALS\SCORES\JEMAIN\03_Section_B
+
+  - section: 04_Outro
+    video_folder: I:\PORTALS\SCORES\JEMAIN\04_Outro

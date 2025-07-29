@@ -25,5 +25,3 @@ class ControlPanelExt:
         Handle the load button click event.
         """
         op.SCORE.LoadScore(self.scoreFileBrowser.par.Value0.val)
-        
-        

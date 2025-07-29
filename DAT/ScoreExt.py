@@ -13,6 +13,8 @@ class ScoreExt:
 					dependable=True, readOnly=False)
 		TDF.createProperty(self, 'ScoreName', value="",
 					dependable=True, readOnly=False)
+		TDF.createProperty(self, 'SectionList', value=[],
+					dependable=True, readOnly=False)		
 
 	def LoadScore(self, scorePath):
 		"""
@@ -23,8 +25,6 @@ class ScoreExt:
 			ui.messageBox('error','Score path must end with .yaml')
 			return
 
-		self.ScorePath = scorePath
-
 		with open(scorePath) as f:
 			data = yaml.load(f, Loader=yaml.FullLoader)
 			if not data:
@@ -32,8 +32,32 @@ class ScoreExt:
 				ui.messageBox('error','Score file is empty or invalid')
 				return
 
-			op.SETTINGS.ReadConfigDict(data)
+			self.ScorePath = scorePath
+			op.SETTINGS.ReadConfigDict(data['config'])
+			self.readScore(data['sections'])
 
-			print(data)
+		# debug(f'Score: {scorePath}')
 
-		debug(f'Score: {scorePath}')
+	def readScore(self, sections):
+		"""
+		Read the score sections.
+		"""
+		for section in sections:
+			if 'name' not in section:
+				op.LOG.Log('Section must have a name')
+				ui.messageBox('error','Section must have a name')
+				continue
+
+			if 'video_folder' not in section:
+				op.LOG.Log('Section must have a video folder')
+				ui.messageBox('error','Section must have a video folder')
+				continue
+
+			self.addSection(section)
+
+	def addSection(self, sectionDict):
+		"""
+		Add a section to the score.
+		"""
+		self.SectionList.append(sectionDict)
+		op.LOG.Log(f'Section added: {sectionDict}')
