@@ -1,3 +1,5 @@
+# StartupExt.py
+
 from TDStoreTools import StorageManager
 import TDFunctions as TDF
 
@@ -7,7 +9,7 @@ import sys
 
 class StartupExt:
     """
-    StartupExt description
+    Called when the project starts
     """
 
     def __init__(self, ownerComp):
@@ -30,7 +32,7 @@ class StartupExt:
         op.LOG.Log('STARTUP: Startup initiated')
         
         self.addDependenciesToPath()
-        op.SETTINGS.ConfigSettings()
+        op.SETTINGS.InitializeSettings()
 
         op.LOG.Log('STARTUP: Startup Completed')
         op.LOG.Log('+++++++++++++++++++++++++++++++++++++++++++++++')
