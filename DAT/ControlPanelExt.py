@@ -17,14 +17,16 @@ class ControlPanelExt:
 		self.controlPanel = op("control_panel_container")
 
 	def OpenControlPanel(self):
+		op.LOG.Log(f"Opening Control Panel")
 		self.controlPanel.openViewer()
-		debug("open control panel")
 
 	def HandleLoadButton(self):
 		"""
 		Handle the load button click event.
 		"""
-		op.SCORE.LoadScore(self.scoreFileBrowser.par.Value0.val)
+		scorePath = self.scoreFileBrowser.par.Value0.val
+		op.LOG.Log(f"Load Score button clicked: {scorePath}")
+		op.SCORE.LoadScore(scorePath)
 
 	def HandleNextSectionButton(self):
 		"""
