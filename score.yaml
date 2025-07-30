@@ -2,7 +2,7 @@
 config:
   name: JEMAIN
 
-  root: I:\PORTALS\SCORES\JEMAIN
+  root: SCORES\JEMAIN
   output_resolution: [1920, 1080]
   audio_device: "ASIO4ALL"
   midi_device: "LoopBE1"
@@ -16,24 +16,13 @@ config:
 
 sections:
   - name: 01_Intro
-    - channel: A1V
-    video_folder: I:\PORTALS\SCORES\JEMAIN\01_Intro
-    - channel: A2V
-    video_folder: I:\PORTALS\SCORES\JEMAIN\01_Intro
-    - channel: B1V
-    video_folder: I:\PORTALS\SCORES\JEMAIN\01_Intro
-    - channel: B2V
-    video_folder: I:\PORTALS\SCORES\JEMAIN\01_Intro
-    - channel: C1V
-    video_folder: I:\PORTALS\SCORES\JEMAIN\01_Intro
-    - channel: C2V
-    video_folder: I:\PORTALS\SCORES\JEMAIN\01_Intro
+    video_folder: 01_Intro
 
   - name: 02_Section_A
-    video_folder: I:\PORTALS\SCORES\JEMAIN\02_Section_A
+    video_folder: 02_Section_A
 
   - name: 03_Section_B
-    video_folder: I:\PORTALS\SCORES\JEMAIN\03_Section_B
+    video_folder: 03_Section_B
 
   - name: 04_Outro
-    video_folder: I:\PORTALS\SCORES\JEMAIN\04_Outro
+    video_folder: 04_Outro
