@@ -15,14 +15,25 @@ config:
     Tr03: ch10n42 # F#2 (HH on DM)
 
 sections:
-  - section: 01_Intro
+  - name: 01_Intro
+    - channel: A1V
     video_folder: I:\PORTALS\SCORES\JEMAIN\01_Intro
-      
-  - section: 02_Section_A
+    - channel: A2V
+    video_folder: I:\PORTALS\SCORES\JEMAIN\01_Intro
+    - channel: B1V
+    video_folder: I:\PORTALS\SCORES\JEMAIN\01_Intro
+    - channel: B2V
+    video_folder: I:\PORTALS\SCORES\JEMAIN\01_Intro
+    - channel: C1V
+    video_folder: I:\PORTALS\SCORES\JEMAIN\01_Intro
+    - channel: C2V
+    video_folder: I:\PORTALS\SCORES\JEMAIN\01_Intro
+
+  - name: 02_Section_A
     video_folder: I:\PORTALS\SCORES\JEMAIN\02_Section_A
 
-  - section: 03_Section_B
+  - name: 03_Section_B
     video_folder: I:\PORTALS\SCORES\JEMAIN\03_Section_B
 
-  - section: 04_Outro
+  - name: 04_Outro
     video_folder: I:\PORTALS\SCORES\JEMAIN\04_Outro
