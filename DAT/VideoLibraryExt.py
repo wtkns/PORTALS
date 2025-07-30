@@ -90,7 +90,9 @@ class VideoLibraryExt:
         # The component to which this extension is attached
         self.ownerComp = ownerComp
         self.FileList = op('file_list')
-        self.Root = op.SETTINGS.VideoPath
+
+        self.Root = op.SETTINGS.AssetPath
+        # moved to score
         
         # properties
         TDF.createProperty(self, 'FileCount', value=self.FileList.numRows, dependable=True,
