@@ -14,6 +14,8 @@ class ScoreExt:
 		TDF.createProperty(self, 'ScoreName', value="",
 					dependable=True, readOnly=False)
 		TDF.createProperty(self, 'SectionList', value=[],
+					dependable=True, readOnly=False)
+		TDF.createProperty(self, 'CurrentSection', value=0,
 					dependable=True, readOnly=False)		
 
 	def LoadScore(self, scorePath):
@@ -32,11 +34,14 @@ class ScoreExt:
 				ui.messageBox('error','Score file is empty or invalid')
 				return
 
+			self.ResetScore()
 			self.ScorePath = scorePath
 			op.SETTINGS.ReadConfigDict(data['config'])
 			self.readScore(data['sections'])
+			op.CONTROLPANEL.SetCurrentSectionDisplay(0)
+			op.CONTROLPANEL.SetScoreLengthDisplay(len(data['sections']))
 
-		# debug(f'Score: {scorePath}')
+
 
 	def readScore(self, sections):
 		"""
@@ -54,6 +59,7 @@ class ScoreExt:
 				continue
 
 			self.addSection(section)
+		op.LOG.Log(f'Sections loaded successfully, section count: {len(self.SectionList)}')
 
 	def addSection(self, sectionDict):
 		"""
@@ -61,3 +67,32 @@ class ScoreExt:
 		"""
 		self.SectionList.append(sectionDict)
 		op.LOG.Log(f'Section added: {sectionDict}')
+	
+	def GetCurrentSection(self):
+		"""
+		Get the current section.
+		"""
+		if self.CurrentSection < len(self.SectionList):
+			return self.SectionList[self.CurrentSection]
+		else:
+			op.LOG.Log('Current section index out of range')
+			return None
+
+	def ResetScore(self):
+		"""
+		Reset the score to its initial state.
+		"""
+		self.ScorePath = ""
+		self.ScoreName = ""
+		self.SectionList = []
+		self.CurrentSection = 0
+		op.LOG.Log('Score reset to initial state')
+
+	def NextSection(self):
+		op.CONTROLPANEL.HandleNextSectionButton()
+		op.LOG.Log('NextSection called')
+
+	def PreviousSection(self):
+		op.CONTROLPANEL.HandlePreviousSectionButton()
+		op.LOG.Log('PreviousSection called')
+

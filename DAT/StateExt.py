@@ -17,7 +17,7 @@ class StateExt:
 		op.LOG.Log('STATE: initState()')
 		# Initialize the state of the component
 		self.State = 'INIT'
-		op.CONTROLPANEL.OpenScoreBrowser()
+		op.CONTROLPANEL.OpenControlPanel()
 		op.LOG.Log('STATE: Component initialized to INIT state')
 
 
