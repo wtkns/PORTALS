@@ -16,6 +16,9 @@ class ControlPanelExt:
 		self.sectionDisplay = op("section_display")
 		self.controlPanel = op("control_panel_container")
 
+        TDF.createProperty(self, "ScorePath", value="NULL", dependable=True, readOnly=False)
+ 
+
 	def OpenControlPanel(self):
 		op.LOG.Log(f"Opening Control Panel")
 		self.controlPanel.openViewer()
@@ -24,9 +27,9 @@ class ControlPanelExt:
 		"""
 		Handle the load button click event.
 		"""
-		scorePath = self.scoreFileBrowser.par.Value0.val
-		op.LOG.Log(f"Load Score button clicked: {scorePath}")
-		op.SCORE.LoadScore(scorePath)
+		self.ScorePath = self.scoreFileBrowser.par.Value0.val
+		op.LOG.Log(f"Load Score button clicked: {self.ScorePath}")
+		op.STATE.SetState("STARTUP")
 
 	def HandleNextSectionButton(self):
 		"""
