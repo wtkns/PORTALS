@@ -1,14 +1,24 @@
 # ScoreExt.py
+# extension that provides methods for loading the score
 
 from TDStoreTools import StorageManager
 import TDFunctions as TDF
 import yaml
 
+# class Score:
+#     def __init__(self, ownerComp):
+#         self.Path = ""
+#         self.Name = ""
+#         self.Sections = [] 
+#         self.CurrentSection = 0
+#         self.VideoLibrary = {}
+
+
 class ScoreExt:
     """
     ScoreExt description
-    SCORE is a singleton object that holds the current loaded score.
-    Score contains 
+    SCORE is a singleton object instantiated in STATE (op.STATE.Score)
+    that holds the current loaded score.
     """
     def __init__(self, ownerComp):
         # The component to which this extension is attached
@@ -47,6 +57,7 @@ class ScoreExt:
             # op.VIDEOLIBRARY.
             op.CONTROLPANEL.SetCurrentSectionDisplay(0)
             op.CONTROLPANEL.SetScoreLengthDisplay(len(data['sections']))
+        return self
 
 
 
