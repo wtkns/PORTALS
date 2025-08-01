@@ -411,6 +411,10 @@ pattern_sections:
 - STOPPED: System is stopped or in an Error State, must be reset.
 
 ### Next Time:
-- refactor/fix to store SCORE singleton in STATE
+- CONTROLPANEL.HandleLoadButton call sets CONTROLPANEL.ScorePath
+- CONTROLPANEL.HandleLoadButton updates STATE.State to STARTUP
+- STATE.handleSetState("STARTUP") creates STATE.Score with SCORE.LoadScore(ScorePath):returns Score object
+
+refactor/fix to store SCORE singleton in STATE
 - refactor Video Library (Dictionary) object to load into SCORE
 
