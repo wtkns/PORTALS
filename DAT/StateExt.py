@@ -62,6 +62,11 @@ class StateExt:
                 op.LOG.Log("StateExt: Initialized to INIT")
 
             case "STARTUP":
+                # Loads the score and sets up the system for the next steps.
+                # initiated by CONTROLPANEL.HandleLoadButton()
+                op.LOG.Log("StateExt: Initializing STARTUP")
+                self.Score = op.SCORE.LoadScore(op.CONTROLPANEL.ScorePath)
+
                 # Score is loaded, ready to load videos, set up video bus, and output
                 self.State = "STARTUP"
                 op.LOG.Log("StateExt: Initialized to STARTUP")
