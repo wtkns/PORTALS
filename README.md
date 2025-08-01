@@ -392,3 +392,25 @@ pattern_sections:
 		- #### Next Section
 			- ##### Update MIDI Listener
       
+
+
+## 7/31/25
+### Updates
+- general cleanup and improved documentation. created class template in DOC/Templates/ 
+- see also: https://realpython.com/documenting-python-code/
+- minor refactor of startup process including STARTUP, LOG, and SETTINGS
+- added LOG.DumpLog() and LOG.ClearLog()
+
+#### State Map:
+- NULL: System is not initialized
+- INIT: Initialized system, ready to LOAD SCORE.
+- STARTUP: Score is loaded, ready to load videos, set up video bus, MIDI, and output.
+- READY: Everything is loaded successfully. System is ready to run.
+- RUNNING: System is actively processing.
+- PAUSED: System is paused, can resume or stop.
+- STOPPED: System is stopped or in an Error State, must be reset.
+
+### Next Time:
+- refactor/fix to store SCORE singleton in STATE
+- refactor Video Library (Dictionary) object to load into SCORE
+

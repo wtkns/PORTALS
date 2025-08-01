@@ -89,20 +89,15 @@ class VideoLibraryExt:
     def __init__(self, ownerComp):
         # The component to which this extension is attached
         self.ownerComp = ownerComp
-        self.FileList = op('file_list')
-
-        self.Root = op.SETTINGS.AssetPath
-        # moved to score
+        self.fileList = op('file_list')
         
-        # properties
-        TDF.createProperty(self, 'FileCount', value=self.FileList.numRows, dependable=True,
-                           readOnly=False)
-
-        TDF.createProperty(self, 'VideoPlaylist', value=Playlist(folder_path=self.Root), dependable=True,
-                           readOnly=False)
-
+    def LoadVideos(self, root_path):
+        """Load videos from the specified root path."""
         my_playlist = self.VideoPlaylist
-        # my_playlist.populate_videos()
+        my_playlist.populate_videos()
+        self.FileCount = my_playlist.get_video_count()
+        op.LOG.Log(f'VideoLibrary: Loaded {self.FileCount} videos from {my_playlist.folder_path}')
+
         
     def GetRandomVideo(self):
         # op.VIDEOLIBRARY.GetRandomVideo()
@@ -115,4 +110,9 @@ class VideoLibraryExt:
         my_playlist = self.VideoPlaylist
         video = my_playlist.get_next_video()
         return video
+
+    def GetVideoCount(self):
+        # op.VIDEOLIBRARY.GetVideoCount()
+        my_playlist = self.VideoPlaylist
+        return len(my_playlist.videos)
 
