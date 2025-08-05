@@ -418,3 +418,7 @@ pattern_sections:
 refactor/fix to store SCORE singleton in STATE
 - refactor Video Library (Dictionary) object to load into SCORE
 
+## 8/5:
+- added bitwig project for clock
+- refactored ScoreExt to return a Score object which is held by STATE.Score
+- refactored STATE to use Enums and individual handlers
