@@ -22,11 +22,14 @@ class ControlPanelExt:
 		op.LOG.Log(f"Opening Control Panel")
 		self.controlPanel.openViewer()
 
+
+
 	def HandleLoadButton(self):
 		"""
 		Handle the load button click event.
 		"""
-		self.ScorePath = self.scoreFileBrowser.par.Value0.val
+		scoreFilePath = self.scoreFileBrowser.par.Value0.val
+		self.ScorePath = scoreFilePath
 		op.LOG.Log(f"Load Score button clicked: {self.ScorePath}")
 		op.STATE.SetState("STARTUP")
 
@@ -35,10 +38,10 @@ class ControlPanelExt:
 		if next section is available, increment current section
 		"""
 		op.LOG.Log(f"HandleNextSectionButton called")
-		if op.SCORE.CurrentSection < len(op.SCORE.SectionList) - 1:
-			op.SCORE.CurrentSection += 1
-			op.SCORE.SetCurrentSectionDisplay(op.SCORE.CurrentSection)
-			op.LOG.Log(f"Current section incremented to {op.SCORE.CurrentSection}")
+		# if op.SCORE.CurrentSection < len(op.SCORE.SectionList) - 1:
+		# 	op.SCORE.CurrentSection += 1
+		# 	op.SCORE.SetCurrentSectionDisplay(op.SCORE.CurrentSection)
+		# 	op.LOG.Log(f"Current section incremented to {op.SCORE.CurrentSection}")
 
 	def HandlePreviousSectionButton(self):
 		"""
@@ -50,13 +53,13 @@ class ControlPanelExt:
 		"""
 		Set the current section display.
 		"""
-		self.sectionDisplay.par.Value0 = sectionNumber
+		# self.sectionDisplay.par.Value0 = sectionNumber
 		op.LOG.Log(f"Set current section display to {sectionNumber}")
 
 	def SetScoreLengthDisplay(self, scoreLength):
 		"""
 		Set the score length display.
 		"""
-		self.sectionDisplay.par.Value1 = scoreLength
+		# self.sectionDisplay.par.Value1 = scoreLength
 		op.LOG.Log(f"Set score length display to {scoreLength}")
 
