@@ -16,8 +16,7 @@ class ControlPanelExt:
 		self.sectionDisplay = op("section_display")
 		self.controlPanel = op("control_panel_container")
 
-        TDF.createProperty(self, "ScorePath", value="NULL", dependable=True, readOnly=False)
- 
+		TDF.createProperty(self, "ScorePath", value="NULL", dependable=True, readOnly=False)
 
 	def OpenControlPanel(self):
 		op.LOG.Log(f"Opening Control Panel")
