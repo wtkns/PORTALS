@@ -38,10 +38,12 @@ class StartupExt:
         # The component to which this extension is attached
         self.ownerComp = ownerComp
 
-    def getDependenciesPath(self):
-        return f"{op.SETTINGS.ProjectPath}/DEP/PYTHON"
+    def get_dependencies_path(self):
+        """Return the absolute path to the dependencies folder."""
+        return os.path.join(op.SETTINGS.ProjectPath, self.DEPENDENCIES_SUBPATH)
 
-    def addDependenciesToPath(self, dep_path):
+    def add_dependencies_to_path(self, dep_path):
+        """Add the dependencies path to sys.path if not already present."""
         norm_dep_path = os.path.normpath(dep_path)
         if norm_dep_path not in sys.path:
             sys.path.insert(0, norm_dep_path)
@@ -49,12 +51,24 @@ class StartupExt:
         else:
             op.LOG.Log(f"EXISTS: {norm_dep_path} in sys.path")
 
-    def Startup(self):
-        me.time.play = 0 # Stop the timeline
-        me.time.frame = 0 # Reset the timeline frame to 0
-        op.LOG.CreateLogFile()
-        op.LOG.Log("++++ STARTUP.Startup() called ++++")
+    def reset_timeline(self):
+        """Reset the timeline to frame 0 and stop playback."""
+        me.time.play = 0
+        me.time.frame = 0
+
+    def initialize_settings(self):
+        """Initialize project settings."""
         op.SETTINGS.InitializeSettings()
-        self.addDependenciesToPath(self.getDependenciesPath())
-        op.STATE.SetState("INIT")
-        op.LOG.Log("++++ STARTUP: Startup Completed ++++")
+
+    def Startup(self):
+        """Main startup routine called on project start."""
+        try:
+            self.reset_timeline()
+            op.LOG.CreateLogFile()
+            op.LOG.Log("++++ STARTUP.Startup() called ++++")
+            self.initialize_settings()
+            self.add_dependencies_to_path(self.get_dependencies_path())
+            op.STATE.SetState("INIT")
+            op.LOG.Log("++++ STARTUP: Startup Completed ++++")
+        except Exception as e:
+            op.LOG.Log(f"STARTUP ERROR: {e}")
