@@ -38,7 +38,7 @@ class SettingsExt:
             return
         self.AssetPath = nodeSettings[self.Node, 'asset_path'].val
 
-    def ReadConfigDict(self, config_dict):
+    def SetConfigFromScore(self, config_dict):
         self.AudioDevice = config_dict.get('audio_device', '')
         self.MidiDevice = config_dict.get('midi_device', '')
         self.MidiChannel = config_dict.get('midi_channel', '')
