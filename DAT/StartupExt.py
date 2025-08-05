@@ -37,6 +37,8 @@ class StartupExt:
     def __init__(self, ownerComp):
         # The component to which this extension is attached
         self.ownerComp = ownerComp
+        # Subpath for dependencies
+        self.DEPENDENCIES_SUBPATH = "/DEP/PYTHON"
 
     def get_dependencies_path(self):
         """Return the absolute path to the dependencies folder."""
