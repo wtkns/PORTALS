@@ -4,30 +4,47 @@
 from TDStoreTools import StorageManager
 import TDFunctions as TDF
 
+from enum import Enum
+
+class SystemState(Enum):
+    """
+        Each state represents a different phase of the system's operation.
+    """
+
+    NULL = "NULL" # System is not initialized
+    INIT = "INIT" # Initialized system, ready to LOAD SCORE.
+    STARTUP = "STARTUP" # Score is loaded, ready to load videos, set up video bus, MIDI, and output.
+    READY = "READY" # Everything is loaded successfully. System is ready to run.
+    RUNNING = "RUNNING" # System is actively processing.
+    PAUSED = "PAUSED" # System is paused, can resume or stop.
+    STOPPED = "STOPPED" # System is stopped or in an Error State, must be reset.
+
 
 class StateExt:
     """
     handles the state of the system.
     Valid states are: INIT, STARTUP, READY, RUNNING, PAUSED, STOPPED.
-    Each state represents a different phase of the system's operation.
-        NULL: System is not initialized
-        INIT: Initialized system, ready to LOAD SCORE.
-        STARTUP: Score is loaded, ready to load videos, set up video bus, MIDI, and output.
-        READY: Everything is loaded successfully. System is ready to run.
-        RUNNING: System is actively processing.
-        PAUSED: System is paused, can resume or stop.
-        STOPPED: System is stopped or in an Error State, must be reset.
     Handles the state transitions and logs the state changes.
     """
 
     def __init__(self, ownerComp):
-        # The component to which this extension is attached
-        self.ownerComp = ownerComp
-        self.validStates = ["INIT", "STARTUP", "READY", "RUNNING", "PAUSED", "STOPPED"]
+        self.ownerComp = ownerComp # The component to which this extension is attached
+
+        self.state_handlers = {
+            SystemState.INIT: self._handle_init,
+            SystemState.STARTUP: self._handle_startup,
+            SystemState.READY: self._handle_ready,
+            SystemState.RUNNING: self._handle_running,
+            SystemState.PAUSED: self._handle_paused,
+            SystemState.STOPPED: self._handle_stopped,
+        }
 
         # properties
         TDF.createProperty(self, "State", value="NULL", dependable=True, readOnly=False)
+        TDF.createProperty(self, "MidiMap", value="NULL", dependable=True, readOnly=False) # holds the current loaded midi map SINGLETON OBJECT
         TDF.createProperty(self, "Score", value="NULL", dependable=True, readOnly=False) # holds the current loaded score SINGLETON OBJECT
+
+
 
     def validState(self, state):
         """
@@ -45,47 +62,46 @@ class StateExt:
         """
         Interface to set the current state of the system.
         """
-        if self.validState(new_state):
-            self.handleSetState(new_state)
+        try:
+            state_enum = SystemState(new_state)
+        except ValueError:
+            badStateMessage = f"StateExt: Invalid state {new_state}. Valid states are: {[s.value for s in SystemState]}"
+            op.LOG.Log(badStateMessage)
+            debug(badStateMessage)
+            return
+
+        handler = self.state_handlers.get(state_enum)
+        if handler:
+            handler()
         else:
-            op.LOG.Log(
-                f"StateExt: Invalid state {new_state}. Valid states are: {self.validStates}"
-            )
+            op.LOG.Log(f"StateExt: No handler for state {new_state}")
 
-    def handleSetState(self, new_state):
-        # Initialize the state of the component
-        match new_state:
-            case "INIT":
-                # Initialized system, ready to LOAD SCORE
-                self.State = "INIT"
-                op.CONTROLPANEL.OpenControlPanel()
-                op.LOG.Log("StateExt: Initialized to INIT")
 
-            case "STARTUP":
-                # Loads the score and sets up the system for the next steps.
-                # initiated by CONTROLPANEL.HandleLoadButton()
-                op.LOG.Log("StateExt: Initializing STARTUP")
-                self.Score = op.SCORE.LoadScore(op.CONTROLPANEL.ScorePath)
+    def _handle_init(self):
+        self.State = SystemState.INIT.value
+        op.CONTROLPANEL.OpenControlPanel()
+        op.LOG.Log("StateExt: Initialized to INIT")
 
-                # Score is loaded, ready to load videos, set up video bus, and output
-                self.State = "STARTUP"
-                op.LOG.Log("StateExt: Initialized to STARTUP")
+    def _handle_startup(self):
+        op.LOG.Log("StateExt: Initializing STARTUP")
+        self.Score = op.SCORE.LoadScore(op.CONTROLPANEL.ScorePath)
+        op.CONTROLPANEL.SetCurrentSectionDisplay(0)
+        op.CONTROLPANEL.SetScoreLengthDisplay(len(self.Score.Sections))
+        self.State = SystemState.STARTUP.value
+        op.LOG.Log("StateExt: Initialized to STARTUP")
 
-            case "READY":
-                self.State = "READY"
-                op.LOG.Log("StateExt: Initialized to READY")
+    def _handle_ready(self):
+        self.State = SystemState.READY.value
+        op.LOG.Log("StateExt: Initialized to READY")
 
-            case "RUNNING":
-                self.State = "RUNNING"
-                op.LOG.Log("StateExt: Initialized to RUNNING")
+    def _handle_running(self):
+        self.State = SystemState.RUNNING.value
+        op.LOG.Log("StateExt: Initialized to RUNNING")
 
-            case "PAUSED":
-                self.State = "PAUSED"
-                op.LOG.Log("StateExt: Initialized to PAUSED")
+    def _handle_paused(self):
+        self.State = SystemState.PAUSED.value
+        op.LOG.Log("StateExt: Initialized to PAUSED")
 
-            case "STOPPED":
-                self.State = "STOPPED"
-                op.LOG.Log("StateExt: Initialized to STOPPED")
-
-            case _:
-                op.LOG.Log(f"StateExt: Unrecognized state {new_state}")
+    def _handle_stopped(self):
+        self.State = SystemState.STOPPED.value
+        op.LOG.Log("StateExt: Initialized to STOPPED")
