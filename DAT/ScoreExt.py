@@ -13,9 +13,7 @@ class Score:
                 raise ValueError("YAML file is empty or invalid")
             self.Config = data.get('config', {})
             self.Sections = data.get('sections', [])
-
-
-
+            self.MidiMap = data.get('midi_map', {})
 
 class ScoreExt:
     """
