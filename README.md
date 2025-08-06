@@ -293,6 +293,17 @@ etc.
 | Midi Channel | Video Channel | Step Trigger | Section Trigger | Repeats | Transform Key | Transformation Values |
 | 1 (Kick)     | A1V           | 2            | 9               | 16      | Scale         | `StartScale:1, EndScale:0.8, Duration:0.1` |
 
+chan	name	count	cycle	limit
+ch1n37	kick	0	2	2
+ch1n39	snare	0	0	0
+ch1n40	clap	0	0	0
+ch1n42	lotom	0	5	8
+ch1n43	clhat	0	3	4
+ch1n50	cymbl	0	0	0
+ch1n52	cowbl	0	5	8
+
+
+
 ```yaml
 # Track Configuration
 config:
@@ -422,3 +433,8 @@ refactor/fix to store SCORE singleton in STATE
 - added bitwig project for clock
 - refactored ScoreExt to return a Score object which is held by STATE.Score
 - refactored STATE to use Enums and individual handlers
+### Next
+- fix control panel section display
+- add videoplayer (Module on Demand?)
+
+## 8/6:
