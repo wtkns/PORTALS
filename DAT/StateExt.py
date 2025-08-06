@@ -76,6 +76,15 @@ class StateExt:
         else:
             op.LOG.Log(f"StateExt: No handler for state {new_state}")
 
+    def _handle_Reset(self):
+        """
+        Reset the system to the initial state.
+        """
+        self.State = SystemState.NULL.value
+        self.Score = "NULL"
+        self.MidiMap = "NULL"
+        op.STARTUP.Startup()
+        op.LOG.Log("StateExt: System reset to NULL state")
 
     def _handle_init(self):
         self.State = SystemState.INIT.value

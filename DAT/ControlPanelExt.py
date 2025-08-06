@@ -63,3 +63,10 @@ class ControlPanelExt:
 		# self.sectionDisplay.par.Value1 = scoreLength
 		op.LOG.Log(f"Set score length display to {scoreLength}")
 
+	def HandleStartupButton(self):
+		"""
+		Handle the startup button click event.
+		"""
+		op.LOG.Log(f"Startup button clicked")
+		op.STATE.SetState("STARTUP")
+
