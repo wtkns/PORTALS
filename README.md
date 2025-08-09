@@ -1,4 +1,5 @@
 # PORTALS: **Passage Oracle for Realtime Transformation And Luminous States.**
+
 WIP Specification for a real-time performance sequencer for transforming and compositing multichannel video.
 
 <https://youtu.be/3JDeF_KNhiE>
@@ -230,18 +231,19 @@ op('str{chan}')
 38 - D1 - SnareDrum
 36 - C1 - BassDrum
 
-# PORTALS Dev Notes
+## PORTALS Dev Notes
 
-## 7/19 TD and Python Extensions
+### 7/19 TD and Python Extensions
+
 TD2025.30060
 
 framework inspo: Noah Norman <https://youtu.be/nQT7EhYCVg0?si=dsdZKY6UBHnZ7C-W>
 git into it: Matthew Ragan: <https://matthewragan.com/2017/12/03/touchdesigner-working-styles-git/>
 details on extensions: <https://derivative.ca/UserGuide/Extensions>
 
-## 7-21 Pythonic Extensions
+### 7-21 Pythonic Extensions
 
-### Parameters
+#### Parameters
 
 Controls exposed on parameter page of components, script ops and c++ ops.
 (easiest way to create: using the RMB -> Customize... dialog on any component or Script Operator.)
@@ -252,15 +254,15 @@ Controls exposed on parameter page of components, script ops and c++ ops.
         newPage = baseOp.appendCustomPage('Controls')
         newTuplet = newPage.appendPulse('Startsearch', label='Click to Start Search')
 
-#### Internal Parameters
+##### Internal Parameters
 
 Only available inside the component. Details: <https://docs.derivative.ca/Internal_Parameters>
 
-### Attributes
+#### Attributes
 
 Standard Python variables directly associated with an object's instance
 
-### Properties
+#### Properties
 
 like attributes but they have accessor functions (getter, setter, deleter).
     Naming: Capitalized to be promoted. lowercase for internal only.
@@ -269,7 +271,7 @@ like attributes but they have accessor functions (getter, setter, deleter).
         TDF.createProperty(self, 'MyProperty', value=0, dependable=True,
          readOnly=True)
 
-## 7-22 add external python dependencies
+### 7-22 add external python dependencies
 
 <https://derivative.ca/community-post/introducing-touchdesigner-python-environment-manager-tdpyenvmanager/72024>
 
@@ -282,27 +284,23 @@ in OP.tdPyEnvManager pulse Open CLI
 pip install moviepy
 etc.
 
-
-## 7/23 review Dataclass and YAML for score/pattern file
+### 7/23 review Dataclass and YAML for score/pattern file
 
 ![state diagram showing flow of control](DOC/IMAGES/state_diagram.png)
 
-
-# YAML Pattern File prototype:
+#### YAML Pattern File prototype
 
 | Midi Channel | Video Channel | Step Trigger | Section Trigger | Repeats | Transform Key | Transformation Values |
 | 1 (Kick)     | A1V           | 2            | 9               | 16      | Scale         | `StartScale:1, EndScale:0.8, Duration:0.1` |
 
-chan	name	count	cycle	limit
-ch1n37	kick	0	2	2
-ch1n39	snare	0	0	0
-ch1n40	clap	0	0	0
-ch1n42	lotom	0	5	8
-ch1n43	clhat	0	3	4
-ch1n50	cymbl	0	0	0
-ch1n52	cowbl	0	5	8
-
-
+chan name count cycle limit
+ch1n37 kick 0 2 2
+ch1n39 snare 0 0 0
+ch1n40 clap 0 0 0
+ch1n42 lotom 0 5 8
+ch1n43 clhat 0 3 4
+ch1n50 cymbl 0 0 0
+ch1n52 cowbl 0 5 8
 
 ```yaml
 # Track Configuration
@@ -379,40 +377,42 @@ pattern_sections:
 
 ```
 
+- ## Open TD File
 
-- # Open TD File >
-	- ## INIT settings
-	- ## INIT State
-	- ## Open Control Panel
-	- ### Open Score file
-		- #### INITIALIZE
-			- ##### Video Library
-			- ##### MIDI Map
-			- ##### Pattern
-				- ###### Parse Sections
-			- ##### Video Players
-				- ###### Video Files
-				- ###### Mask Files
-			- ##### Video Bus
-				- ###### Transform Defaults
-	- ### Play Pattern
-		- #### Start:
-			- ##### MIDI Listener
-			- ##### Video Players
-			- ##### Video Bus
-		- #### Next Section
-			- ##### Update MIDI Listener
-      
+  - ### INIT settings
 
+  - **init state**
+  - **open control panel**
+  - **open score file**
+    - **initialize**
+      - **video library**
+      - **midi map**
+      - **pattern**
+        - **parse sections**
+      - **video players (initialization)**
+        - **video files**
+        - **mask files**
+      - **video bus (initialization)**
+        - **transform defaults**
+  - **play pattern**
+    - **start**
+      - **midi listener**
+      - **video players (playback)**
+      - **video bus (playback)**
+    - **next section**
+      - **update midi listener**
 
 ## 7/31/25
+
 ### Updates
-- general cleanup and improved documentation. created class template in DOC/Templates/ 
-- see also: https://realpython.com/documenting-python-code/
+
+- general cleanup and improved documentation. created class template in DOC/Templates/
+- see also: <https://realpython.com/documenting-python-code/>
 - minor refactor of startup process including STARTUP, LOG, and SETTINGS
 - added LOG.DumpLog() and LOG.ClearLog()
 
-#### State Map:
+#### State Map
+
 - NULL: System is not initialized
 - INIT: Initialized system, ready to LOAD SCORE.
 - STARTUP: Score is loaded, ready to load videos, set up video bus, MIDI, and output.
@@ -421,20 +421,27 @@ pattern_sections:
 - PAUSED: System is paused, can resume or stop.
 - STOPPED: System is stopped or in an Error State, must be reset.
 
-### Next Time:
+### Next Time
+
 - CONTROLPANEL.HandleLoadButton call sets CONTROLPANEL.ScorePath
 - CONTROLPANEL.HandleLoadButton updates STATE.State to STARTUP
 - STATE.handleSetState("STARTUP") creates STATE.Score with SCORE.LoadScore(ScorePath):returns Score object
 
 refactor/fix to store SCORE singleton in STATE
+
 - refactor Video Library (Dictionary) object to load into SCORE
 
-## 8/5:
+## 8/5
+
 - added bitwig project for clock
 - refactored ScoreExt to return a Score object which is held by STATE.Score
 - refactored STATE to use Enums and individual handlers
+
 ### Next
+
 - fix control panel section display
 - add videoplayer (Module on Demand?)
 
-## 8/6:
+## 8/9: layout panel
+
+- need to rewrite handler code to receive from all children
