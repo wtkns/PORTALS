@@ -24,11 +24,11 @@ class ControlPanelExt:
         op.LOG.Log(f"Opening Control Panel")
         self.controlPanel.openViewer()
 
-    def HandleButtonPress(self, buttonFunc):
+    def HandleButtonPress(self, panelName, buttonFunc):
         """
         Handle a button press event.
         """
-        debug(f"CONTROLPANEL Button pressed: {buttonFunc}")
+        debug(f"CONTROLPANEL Button pressed: {panelName}, {buttonFunc}")
 
         if buttonFunc == "loadScore":
             self.HandleLoadButton()
