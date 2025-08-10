@@ -89,6 +89,7 @@ class StateExt:
     def _handle_init(self):
         self.State = SystemState.INIT.value
         op.CONTROLPANEL.OpenControlPanel()
+        op.WINDOW.OpenWindow(2)
         op.LOG.Log("StateExt: Initialized to INIT")
 
     def _handle_startup(self):
