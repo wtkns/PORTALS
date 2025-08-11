@@ -84,6 +84,6 @@ class StartupExt:
             self.add_dependencies_to_path(self.get_dependencies_path())
             op.STATE.SetState("INIT")
             op.LOG.Log("++++ STARTUP: Startup Completed ++++")
-            self.open_std_out()
+            # self.open_std_out()
         except Exception as e:
             op.LOG.Log(f"STARTUP ERROR: {e}")
