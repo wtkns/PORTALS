@@ -30,14 +30,26 @@ class ControlPanelExt:
         """
         debug(f"CONTROLPANEL Button pressed: {panelName}, {buttonFunc}")
 
-        if buttonFunc == "loadScore":
-            self.HandleLoadButton()
-        elif buttonFunc == "next":
-            self.HandleNextSectionButton()
-        elif buttonFunc == "previous":
-            self.HandlePreviousSectionButton()
+        obj = self
+        getattr(obj, buttonFunc)()
+
+
+
+        # if buttonFunc == "loadScore":
+        #     self.HandleLoadButton()
+        # elif buttonFunc == "next":
+        #     self.HandleNextSectionButton()
+        # elif buttonFunc == "previous":
+        #     self.HandlePreviousSectionButton()
 
         op.LOG.Log(f"HandleButtonPress: {buttonFunc}")
+
+    def loadScore(self):
+        """
+        Load the score from the file browser.
+        """
+        debug("FUNCTION CALLED: Loading score from file browser")
+
 
     def HandleLoadButton(self):
         """

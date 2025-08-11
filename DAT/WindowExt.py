@@ -21,6 +21,5 @@ class WindowExt:
 
 
     def OpenWindow(self, monitor):
-        debug(monitor)
         op.WINDOW.par.performance.pulse()
 
