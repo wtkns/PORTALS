@@ -24,60 +24,59 @@ class ControlPanelExt:
         op.LOG.Log(f"Opening Control Panel")
         self.controlPanel.openViewer()
 
-    def HandleButtonPress(self, panelName, buttonFunc):
+    def HandleButtonPress(self, controller, panelName, buttonFunc):
         """
         Handle a button press event.
         """
-        debug(f"CONTROLPANEL Button pressed: {panelName}, {buttonFunc}")
-
-        obj = self
-        getattr(obj, buttonFunc)()
-
-
-
-        # if buttonFunc == "loadScore":
-        #     self.HandleLoadButton()
-        # elif buttonFunc == "next":
-        #     self.HandleNextSectionButton()
-        # elif buttonFunc == "previous":
-        #     self.HandlePreviousSectionButton()
-
-        op.LOG.Log(f"HandleButtonPress: {buttonFunc}")
+        try:
+            obj = self
+            getattr(obj, buttonFunc)()
+        except Exception as e:
+            debug(f"Error in HandleButtonPress, (function may not exist): {e}")
+            return False
 
     def loadScore(self):
         """
         Load the score from the file browser.
         """
-        debug("FUNCTION CALLED: Loading score from file browser")
+        debug("Loading score from file browser")
 
+    def initScore(self):
+        """
+        Initialize the score.
+        """
+        debug("Initializing score")
 
-    def HandleLoadButton(self):
+    def resetScore(self):
         """
-        Handle the load button click event.
+        Initialize the score.
         """
-        # scoreFilePath = self.scoreFileBrowser.par.Value0.val
-        # self.ScorePath = scoreFilePath
-        # op.LOG.Log(f"Load Score button clicked: {self.ScorePath}")
-        debug(f"Load Score button clicked")
-        # op.STATE.SetState("STARTUP")
+        debug("Resetting score")
 
-    def HandleNextSectionButton(self):
+    def playScore(self):
         """
-        if next section is available, increment current section
+        Play the score.
         """
-        op.LOG.Log(f"HandleNextSectionButton called")
-        debug(f"HandleNextSectionButton called")
-        # if op.SCORE.CurrentSection < len(op.SCORE.SectionList) - 1:
-        # 	op.SCORE.CurrentSection += 1
-        # 	op.SCORE.SetCurrentSectionDisplay(op.SCORE.CurrentSection)
-        # 	op.LOG.Log(f"Current section incremented to {op.SCORE.CurrentSection}")
+        debug("Playing score")
+    
+    def pauseScore(self):
+        """
+        Pause the score.
+        """
+        debug("Pausing score")
 
-    def HandlePreviousSectionButton(self):
+    def nextSection(self):
         """
-        if previous section is available, decrement current section
+        Skip to the next section of the score.
         """
-        op.LOG.Log(f"HandlePreviousSectionButton called")
-        debug(f"HandlePreviousSectionButton called")
+        debug("Next section")
+
+    def previousSection(self):
+        """
+        Skip to the previous section of the score.
+        """
+        debug("previous section")
+
 
     def SetCurrentSectionDisplay(self, sectionNumber):
         """
