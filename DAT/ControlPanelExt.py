@@ -41,7 +41,7 @@ class ControlPanelExt:
         """
         fileOp = op('control_panel_container/01_score/01_file_browser_panel/scoreFileBrowser')
         filePath = fileOp.par.Value0.eval()
-        op.STATE.Score = op.SCORE.LoadScore(filePath)
+        op.STATE.Score = op.SCOREMGR.LoadScore(filePath)
 
         debug(f"Loading {filePath} score from file browser")
 

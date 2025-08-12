@@ -23,10 +23,10 @@ class Score:
             return self.Sections[index]
         return None
 
-class ScoreExt:
+class ScoreMgrExt:
     """
-    ScoreExt description
-    SCORE is a singleton object instantiated in STATE (op.STATE.Score)
+    SCOREMGR is a manager for handling score loading and playback.
+    Score is an object instantiated in STATE (op.STATE.Score)
     that holds the current loaded score.
     """
     def __init__(self, ownerComp):
