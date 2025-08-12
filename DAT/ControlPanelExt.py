@@ -39,7 +39,16 @@ class ControlPanelExt:
         """
         Load the score from the file browser.
         """
-        debug("Loading score from file browser")
+        fileOp = op('control_panel_container/01_score/01_file_browser_panel/scoreFileBrowser')
+        filePath = fileOp.par.Value0.eval()
+        op.STATE.Score = op.SCORE.LoadScore(filePath)
+
+        debug(f"Loading {filePath} score from file browser")
+
+        debug(f"STATE.Score midi map:{op.STATE.Score.MidiMap}")
+        debug(f"STATE.Score Sections:{op.STATE.Score.Sections}")
+        debug(f"STATE.Score Section 1:{op.STATE.Score.GetSection(0)}")
+        
 
     def initScore(self):
         """

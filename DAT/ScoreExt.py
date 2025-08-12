@@ -15,6 +15,14 @@ class Score:
             self.Sections = data.get('sections', [])
             self.MidiMap = data.get('midi_map', {})
 
+    def GetSection(self, index):
+        """
+        Get a section by index.
+        """
+        if 0 <= index < len(self.Sections):
+            return self.Sections[index]
+        return None
+
 class ScoreExt:
     """
     ScoreExt description
