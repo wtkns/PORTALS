@@ -111,3 +111,18 @@ class StateExt:
     def _handle_stopped(self):
         self.State = SystemState.STOPPED.value
         op.LOG.Log("StateExt: Initialized to STOPPED")
+
+    def Handleloadbutton(self):
+        fileOp = op('/project1/CONTROLPANEL/control_panel_container/03_score/01_file_browser_panel/scoreFileBrowser')
+        try:
+            filePath = fileOp.par.Value0.eval()
+            self.Score = op.SCOREMGR.LoadScore(filePath)
+        except Exception as e:
+            debug(f"Error loading score from file browser: {e}")
+            return
+
+        debug(f"Loading {filePath} score from file browser")
+
+        # debug(f"STATE.Score midi map:{self.Score.MidiMap}")
+        # debug(f"STATE.Score Sections:{self.Score.Sections}")
+        # debug(f"STATE.Score Section 1:{self.Score.GetSection(0)}")

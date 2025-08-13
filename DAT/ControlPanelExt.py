@@ -39,16 +39,9 @@ class ControlPanelExt:
         """
         Load the score from the file browser.
         """
-        fileOp = op('control_panel_container/01_score/01_file_browser_panel/scoreFileBrowser')
-        filePath = fileOp.par.Value0.eval()
-        op.STATE.Score = op.SCOREMGR.LoadScore(filePath)
-
-        debug(f"Loading {filePath} score from file browser")
-
-        debug(f"STATE.Score midi map:{op.STATE.Score.MidiMap}")
-        debug(f"STATE.Score Sections:{op.STATE.Score.Sections}")
-        debug(f"STATE.Score Section 1:{op.STATE.Score.GetSection(0)}")
-        
+        debug("Press!")
+        op.STATE.Handleloadbutton()
+        # op.LOG.Log("ControlPanelExt: Load score button pressed")
 
     def initScore(self):
         """
@@ -100,10 +93,3 @@ class ControlPanelExt:
         """
         # self.sectionDisplay.par.Value1 = scoreLength
         op.LOG.Log(f"Set score length display to {scoreLength}")
-
-    def HandleStartupButton(self):
-        """
-        Handle the startup button click event.
-        """
-        op.LOG.Log(f"Startup button clicked")
-        op.STATE.SetState("STARTUP")
