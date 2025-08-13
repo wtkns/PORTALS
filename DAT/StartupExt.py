@@ -53,18 +53,6 @@ class StartupExt:
         else:
             op.LOG.Log(f"EXISTS: {norm_dep_path} in sys.path")
 
-    def open_std_out(self):
-        """Open standard output for logging."""
-        original_stdout = sys.stdout
-        original_stderr = sys.stderr
-        try:
-            output_dat = op('/project1/STDOUT')
-            sys.stdout = output_dat
-            sys.stderr = output_dat
-            op.LOG.Log("Standard output opened successfully.")
-        except Exception as e:
-            op.LOG.Log(f"Error opening standard output: {e}")
-
     def reset_timeline(self):
         """Reset the timeline to frame 0 and stop playback."""
         me.time.play = 0
@@ -84,6 +72,5 @@ class StartupExt:
             self.add_dependencies_to_path(self.get_dependencies_path())
             op.STATE.SetState("INIT")
             op.LOG.Log("++++ STARTUP: Startup Completed ++++")
-            # self.open_std_out()
         except Exception as e:
             op.LOG.Log(f"STARTUP ERROR: {e}")

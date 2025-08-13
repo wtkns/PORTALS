@@ -89,14 +89,10 @@ class StateExt:
     def _handle_init(self):
         self.State = SystemState.INIT.value
         op.CONTROLPANEL.OpenControlPanel()
-        op.WINDOW.OpenWindow(2)
+        # op.WINDOW.OpenWindow(2)
         op.LOG.Log("StateExt: Initialized to INIT")
 
     def _handle_startup(self):
-        op.LOG.Log("StateExt: Initializing STARTUP")
-        self.Score = op.SCORE.LoadScore(op.CONTROLPANEL.ScorePath)
-        op.CONTROLPANEL.SetCurrentSectionDisplay(0)
-        op.CONTROLPANEL.SetScoreLengthDisplay(len(self.Score.Sections))
         self.State = SystemState.STARTUP.value
         op.LOG.Log("StateExt: Initialized to STARTUP")
 
