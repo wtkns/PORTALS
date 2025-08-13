@@ -112,6 +112,7 @@ class StateExt:
         self.State = SystemState.STOPPED.value
         op.LOG.Log("StateExt: Initialized to STOPPED")
 
+    # refactor below into _handle_init
     def Handleloadbutton(self):
         # get the score file path from the CONTROLPANEL
         scoreFileBrowserOp = op.scoreFileBrowser
