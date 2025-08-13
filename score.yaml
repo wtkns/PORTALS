@@ -12,5 +12,14 @@ config:
     Tr01: ch14n37 # C1 (kick on DM)
 
 sections:
-  - name: 01_Intro
+  - name: Intro
     video_folder: 01_Intro
+
+  - name: Section A
+    video_folder: 02_Section_A
+
+  - name: Section B
+    video_folder: 03_Section_B
+
+  - name: Outro
+    video_folder: 04_Outro

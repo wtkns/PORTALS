@@ -113,21 +113,33 @@ class StateExt:
         op.LOG.Log("StateExt: Initialized to STOPPED")
 
     def Handleloadbutton(self):
-        fileOp = op.scoreFileBrowser
+        # get the score file path from the CONTROLPANEL
+        scoreFileBrowserOp = op.scoreFileBrowser
+
+        # get the score object from SCOREMGR
         try:
-            filePath = fileOp.par.Value0.eval()
+            filePath = scoreFileBrowserOp.par.Value0.eval()
             self.Score = op.SCOREMGR.LoadScore(filePath)
         except Exception as e:
             debug(f"Error loading score from file browser: {e}")
             return
-        debug(f"Loading {filePath} score from file browser")
+
+        debug(f"Loaded {filePath} score from file browser")
+
+        # configure the current section
         sectionName = self.Score.GetSectionName(0)
         scorePath = self.Score.GetPath()
         videoFolder = self.Score.GetSectionVideoFolder(0)
 
-        debug(f"Initial Section: {sectionName}")
-        debug(f"Initial Path: {scorePath}")
-        debug(f"Initial video folder: {videoFolder}")
+        #set section display
+        op.dispThisSection.par.text = self.Score.GetCurrentSectionIndex()
+        op.dispLastSection.par.text = self.Score.GetLastSectionIndex()
+
+        # generate video Library
+
+        # debug(f"Initial Section: {sectionName}")
+        # debug(f"Initial Path: {scorePath}")
+        # debug(f"Initial video folder: {videoFolder}")
 
         # op.VIDEOLIBRARY
         # debug(f"STATE.Score midi map:{self.Score.MidiMap}")

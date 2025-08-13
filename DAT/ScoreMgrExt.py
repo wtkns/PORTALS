@@ -16,6 +16,7 @@ class Score:
             self.Path = self.Config.get('root_path', yaml_path)
             self.Sections = data.get('sections', [])
             self.MidiMap = data.get('midi_map', {})
+            self.CurrentSectionIndex = 0
 
     def GetPath(self):
         """
@@ -49,6 +50,18 @@ class Score:
             full_path = os.path.join(self.Path, section.get('video_folder', ''))
             return full_path
         return None
+
+    def GetCurrentSectionIndex(self):
+        """
+        Get the current section.
+        """
+        return self.CurrentSectionIndex + 1
+
+    def GetLastSectionIndex(self):
+        """
+        Get the current section.
+        """
+        return len(self.Sections)
 
 class ScoreMgrExt:
     """
