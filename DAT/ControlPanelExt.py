@@ -39,9 +39,8 @@ class ControlPanelExt:
         """
         Load the score from the file browser.
         """
-        debug("Press!")
         op.STATE.Handleloadbutton()
-        # op.LOG.Log("ControlPanelExt: Load score button pressed")
+        op.LOG.Log("ControlPanelExt: Load score button pressed")
 
     def initScore(self):
         """

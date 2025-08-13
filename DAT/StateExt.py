@@ -113,7 +113,7 @@ class StateExt:
         op.LOG.Log("StateExt: Initialized to STOPPED")
 
     def Handleloadbutton(self):
-        fileOp = op('/project1/CONTROLPANEL/control_panel_container/03_score/01_file_browser_panel/scoreFileBrowser')
+        fileOp = op.scoreFileBrowser
         try:
             filePath = fileOp.par.Value0.eval()
             self.Score = op.SCOREMGR.LoadScore(filePath)
