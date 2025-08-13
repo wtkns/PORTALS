@@ -4,6 +4,7 @@
 from TDStoreTools import StorageManager
 import TDFunctions as TDF
 import yaml
+import os
 
 class Score:
     def __init__(self, yaml_path):
@@ -12,8 +13,15 @@ class Score:
             if not data:
                 raise ValueError("YAML file is empty or invalid")
             self.Config = data.get('config', {})
+            self.Path = self.Config.get('root_path', yaml_path)
             self.Sections = data.get('sections', [])
             self.MidiMap = data.get('midi_map', {})
+
+    def GetPath(self):
+        """
+        Get the root path of the score.
+        """
+        return self.Path
 
     def GetSection(self, index):
         """
@@ -21,6 +29,25 @@ class Score:
         """
         if 0 <= index < len(self.Sections):
             return self.Sections[index]
+        return None
+
+    def GetSectionName(self, index):
+        """
+        Get a section by index.
+        """
+        section = self.GetSection(index)
+        if section:
+            return section.get('name', None)
+        return None
+
+    def GetSectionVideoFolder(self, index):
+        """
+        Get the file path of a section by index.
+        """
+        section = self.GetSection(index)
+        if section:
+            full_path = os.path.join(self.Path, section.get('video_folder', ''))
+            return full_path
         return None
 
 class ScoreMgrExt:

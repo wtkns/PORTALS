@@ -120,9 +120,16 @@ class StateExt:
         except Exception as e:
             debug(f"Error loading score from file browser: {e}")
             return
-
         debug(f"Loading {filePath} score from file browser")
+        sectionName = self.Score.GetSectionName(0)
+        scorePath = self.Score.GetPath()
+        videoFolder = self.Score.GetSectionVideoFolder(0)
 
+        debug(f"Initial Section: {sectionName}")
+        debug(f"Initial Path: {scorePath}")
+        debug(f"Initial video folder: {videoFolder}")
+
+        # op.VIDEOLIBRARY
         # debug(f"STATE.Score midi map:{self.Score.MidiMap}")
         # debug(f"STATE.Score Sections:{self.Score.Sections}")
         # debug(f"STATE.Score Section 1:{self.Score.GetSection(0)}")
