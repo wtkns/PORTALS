@@ -13,11 +13,10 @@ class SystemState(Enum):
 
     NULL = "NULL" # System is not initialized
     INIT = "INIT" # Initialized system, ready to LOAD SCORE.
-    STARTUP = "STARTUP" # Score is loaded, ready to load videos, set up video bus, MIDI, and output.
-    READY = "READY" # Everything is loaded successfully. System is ready to run.
+    QUEUED = "QUEUED" # Score is loaded, MIDI, Video Library, and Output Window are ready.
     RUNNING = "RUNNING" # System is actively processing.
     PAUSED = "PAUSED" # System is paused, can resume or stop.
-    STOPPED = "STOPPED" # System is stopped or in an Error State, must be reset.
+    ERROR = "ERROR" # System is in an Error State
 
 
 class StateExt:
@@ -31,12 +30,12 @@ class StateExt:
         self.ownerComp = ownerComp # The component to which this extension is attached
 
         self.state_handlers = {
-            SystemState.INIT: self._handle_init,
-            SystemState.STARTUP: self._handle_startup,
-            SystemState.READY: self._handle_ready,
-            SystemState.RUNNING: self._handle_running,
-            SystemState.PAUSED: self._handle_paused,
-            SystemState.STOPPED: self._handle_stopped,
+            SystemState.INIT: self._handle_startup,
+            SystemState.QUEUED: self._handle_load,
+            SystemState.RUNNING: self._handle_play,
+            SystemState.PAUSED: self._handle_pause,
+            SystemState.STOPPED: self._handle_stop,
+            SystemState.ERROR: self._handle_halt
         }
 
         # properties
@@ -76,40 +75,40 @@ class StateExt:
         else:
             op.LOG.Log(f"StateExt: No handler for state {new_state}")
 
-    def _handle_Reset(self):
-        """
-        Reset the system to the initial state.
-        """
-        self.State = SystemState.NULL.value
-        self.Score = "NULL"
-        self.MidiMap = "NULL"
-        op.STARTUP.Startup()
-        op.LOG.Log("StateExt: System reset to NULL state")
-
-    def _handle_init(self):
-        self.State = SystemState.INIT.value
-        op.CONTROLPANEL.OpenControlPanel()
-        # op.WINDOW.OpenWindow(2)
-        op.LOG.Log("StateExt: Initialized to INIT")
+    # def _handle_Reset(self):
+    #     """
+    #     Reset the system to the initial state.
+    #     """
+    #     self.State = SystemState.NULL.value
+    #     self.Score = "NULL"
+    #     self.MidiMap = "NULL"
+    #     op.STARTUP.Startup()
+    #     op.LOG.Log("StateExt: System reset to NULL state")
 
     def _handle_startup(self):
-        self.State = SystemState.STARTUP.value
-        op.LOG.Log("StateExt: Initialized to STARTUP")
+        self.State = SystemState.INIT.value
+        op.CONTROLPANEL.OpenControlPanel()
+        op.LOG.Log("StateExt: Initialized to INIT")
 
-    def _handle_ready(self):
-        self.State = SystemState.READY.value
-        op.LOG.Log("StateExt: Initialized to READY")
+    def _handle_load(self):
+        self.State = SystemState.QUEUED.value
+        # op.WINDOW.OpenWindow(2)
+        op.LOG.Log("StateExt: transitioned to QUEUED")
 
-    def _handle_running(self):
+    def _handle_play(self):
         self.State = SystemState.RUNNING.value
-        op.LOG.Log("StateExt: Initialized to RUNNING")
+        op.LOG.Log("StateExt: transitioned to READY")
 
-    def _handle_paused(self):
+    def _handle_pause(self):
         self.State = SystemState.PAUSED.value
-        op.LOG.Log("StateExt: Initialized to PAUSED")
+        op.LOG.Log("StateExt: transitioned to RUNNING")
 
-    def _handle_stopped(self):
-        self.State = SystemState.STOPPED.value
+    def _handle_stop(self):
+        self.State = SystemState.QUEUED.value
+        op.LOG.Log("StateExt: transitioned to QUEUED")
+
+    def _handle_halt(self):
+        self.State = SystemState.ERROR.value
         op.LOG.Log("StateExt: Initialized to STOPPED")
 
     # refactor below into _handle_init

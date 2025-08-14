@@ -457,3 +457,20 @@ refactor/fix to store SCORE singleton in STATE
 - updated minimal testing score with additional sections
 - significant issue after installing update to TD
 - solution was resetting the python interpreter in VS Code, path had changed.
+
+## 8/14:
+- reconfigure states:
+  1. startup -> INIT
+  2. load score -> QUEUED
+  3. play -> RUNNING
+  4. pause -> PAUSED
+  5. halt -> ERROR
+- reconfigure bitwig project and midi
+- update yaml for section
+
+            SystemState.INIT: self._handle_startup,
+            SystemState.QUEUED: self._handle_load,
+            SystemState.RUNNING: self._handle_play,
+            SystemState.PAUSED: self._handle_pause,
+            SystemState.STOPPED: self._handle_stop,
+            SystemState.ERROR: self._handle_halt

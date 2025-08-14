@@ -1,19 +1,34 @@
 # Track Configuration
 config:
   name: JEMAIN
-
   root: SCORES\JEMAIN
   output_resolution: [1920, 1080]
-  midi_device: "LoopBE1"
-  midi_channel: 14
+  monitor_number: 1
 
   # MIDI Note<>Name mapping
   midi_map:
-    Tr01: ch14n37 # C1 (kick on DM)
+    - trigger_name: clock
+      midi_device: "LoopBE1"
+      midi_channel: 14
+      Tr01: ch14n37 # C1 (kick on DM)
+
+    - trigger_name: section
+      midi_device: "LoopBE1"
+      midi_channel: 14
+      Tr01: ch14n38 # C#1 (snare on DM)
 
 sections:
   - name: Intro
     video_folder: 01_Intro
+      trigger_name: clock
+        target: videoplayer
+        channel: random
+        effect: random_video
+
+      trigger_name: clock
+        target: background
+        channel: transform1
+        effect: random_color
 
   - name: Section A
     video_folder: 02_Section_A
