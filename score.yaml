@@ -40,5 +40,9 @@ sections:
   - name: Section B
     video_folder: 03_Section_B
 
+  - name: Section C
+    video_folder: 03_Section_B
+
   - name: Outro
     video_folder: 04_Outro
+    

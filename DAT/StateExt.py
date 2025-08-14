@@ -14,9 +14,7 @@ class SystemState(Enum):
 
     NULL = "NULL"  # System is not initialized
     INIT = "INIT"  # Initialized system, ready to LOAD SCORE.
-    QUEUED = (
-        "QUEUED"  # Score is loaded, MIDI, Video Library, and Output Window are ready.
-    )
+    QUEUED = "QUEUED"  # Score is loaded, MIDI, Video Library, and Output Window are ready.
     RUNNING = "RUNNING"  # System is actively processing.
     PAUSED = "PAUSED"  # System is paused, can resume or stop.
     STOPPED = "STOPPED"  # System Stopped.
@@ -90,9 +88,42 @@ class StateExt:
         op.LOG.Log("StateExt: Initialized to INIT")
 
     def _handle_load(self):
-        self.State = SystemState.QUEUED.value
-        debug("loaded")
+        # get the score file path from the CONTROLPANEL
+        scoreFileBrowserOp = op.scoreFileBrowser
+
+        # get the score object from SCOREMGR
+        try:
+            filePath = scoreFileBrowserOp.par.Value0.eval()
+            self.Score = op.SCOREMGR.LoadScore(filePath)
+        except Exception as e:
+            debug(f"Error loading score from file browser: {e}")
+            return
+
+        debug(f"Loaded {filePath} score from file browser")
+
+        # configure the current section
+        sectionName = self.Score.GetSectionName(0)
+        scorePath = self.Score.GetPath()
+        videoFolder = self.Score.GetSectionVideoFolder(0)
+
+        #set section display
+        op.dispThisSection.par.text = self.Score.GetCurrentSectionIndex()
+        op.dispLastSection.par.text = self.Score.GetLastSectionIndex()
+
+        # generate video Library
+        debug(f"Initial Section: {sectionName}")
+        debug(f"Initial Path: {scorePath}")
+        debug(f"Initial video folder: {videoFolder}")
+
+        # op.VIDEOLIBRARY
+        debug(f"STATE.Score midi map:{self.Score.MidiMap}")
+        debug(f"STATE.Score Sections:{self.Score.Sections}")
+        debug(f"STATE.Score Section 1:{self.Score.GetSection(0)}")
+
+        # Open Output window
         # op.WINDOW.OpenWindow(2)
+
+        self.State = SystemState.QUEUED.value
         op.LOG.Log("StateExt: transitioned to QUEUED")
 
     def _handle_play(self):
@@ -111,37 +142,3 @@ class StateExt:
         self.State = SystemState.ERROR.value
         op.LOG.Log("StateExt: Initialized to STOPPED")
 
-    # # refactor below into _handle_init
-    # def Handleloadbutton(self):
-    #     # get the score file path from the CONTROLPANEL
-    #     scoreFileBrowserOp = op.scoreFileBrowser
-
-    #     # get the score object from SCOREMGR
-    #     try:
-    #         filePath = scoreFileBrowserOp.par.Value0.eval()
-    #         self.Score = op.SCOREMGR.LoadScore(filePath)
-    #     except Exception as e:
-    #         debug(f"Error loading score from file browser: {e}")
-    #         return
-
-    #     debug(f"Loaded {filePath} score from file browser")
-
-    #     # configure the current section
-    #     sectionName = self.Score.GetSectionName(0)
-    #     scorePath = self.Score.GetPath()
-    #     videoFolder = self.Score.GetSectionVideoFolder(0)
-
-    #     #set section display
-    #     op.dispThisSection.par.text = self.Score.GetCurrentSectionIndex()
-    #     op.dispLastSection.par.text = self.Score.GetLastSectionIndex()
-
-    #     # generate video Library
-
-    #     # debug(f"Initial Section: {sectionName}")
-    #     # debug(f"Initial Path: {scorePath}")
-    #     # debug(f"Initial video folder: {videoFolder}")
-
-    #     # op.VIDEOLIBRARY
-    #     # debug(f"STATE.Score midi map:{self.Score.MidiMap}")
-    #     # debug(f"STATE.Score Sections:{self.Score.Sections}")
-    #     # debug(f"STATE.Score Section 1:{self.Score.GetSection(0)}")
