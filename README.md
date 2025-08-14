@@ -455,3 +455,5 @@ refactor/fix to store SCORE singleton in STATE
 - added display for sections, moved load button logic to STATE
 - set section display on loading a score
 - updated minimal testing score with additional sections
+- significant issue after installing update to TD
+- solution was resetting the python interpreter in VS Code, path had changed.
