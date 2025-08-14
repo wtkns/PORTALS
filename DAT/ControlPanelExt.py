@@ -39,7 +39,8 @@ class ControlPanelExt:
         """
         Load the score from the file browser.
         """
-        op.STATE.Handleloadbutton()
+        op.STATE.SetState("QUEUED")
+        # op.STATE.Handleloadbutton()
         op.LOG.Log("ControlPanelExt: Load score button pressed")
 
     def initScore(self):

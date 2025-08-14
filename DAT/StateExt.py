@@ -6,18 +6,21 @@ import TDFunctions as TDF
 
 from enum import Enum
 
+
 class SystemState(Enum):
     """
-        Each state represents a different phase of the system's operation.
+    Each state represents a different phase of the system's operation.
     """
 
-    NULL = "NULL" # System is not initialized
-    INIT = "INIT" # Initialized system, ready to LOAD SCORE.
-    QUEUED = "QUEUED" # Score is loaded, MIDI, Video Library, and Output Window are ready.
-    RUNNING = "RUNNING" # System is actively processing.
-    PAUSED = "PAUSED" # System is paused, can resume or stop.
-    STOPPED = "STOPPED" # System Stopped.
-    ERROR = "ERROR" # System is in an Error State
+    NULL = "NULL"  # System is not initialized
+    INIT = "INIT"  # Initialized system, ready to LOAD SCORE.
+    QUEUED = (
+        "QUEUED"  # Score is loaded, MIDI, Video Library, and Output Window are ready.
+    )
+    RUNNING = "RUNNING"  # System is actively processing.
+    PAUSED = "PAUSED"  # System is paused, can resume or stop.
+    STOPPED = "STOPPED"  # System Stopped.
+    ERROR = "ERROR"  # System is in an Error State
 
 
 class StateExt:
@@ -28,7 +31,7 @@ class StateExt:
     """
 
     def __init__(self, ownerComp):
-        self.ownerComp = ownerComp # The component to which this extension is attached
+        self.ownerComp = ownerComp  # The component to which this extension is attached
 
         self.state_handlers = {
             SystemState.INIT: self._handle_startup,
@@ -36,12 +39,14 @@ class StateExt:
             SystemState.RUNNING: self._handle_play,
             SystemState.PAUSED: self._handle_pause,
             SystemState.STOPPED: self._handle_stop,
-            SystemState.ERROR: self._handle_halt
+            SystemState.ERROR: self._handle_halt,
         }
 
         # properties
         TDF.createProperty(self, "State", value="NULL", dependable=True, readOnly=False)
-        TDF.createProperty(self, "Score", value="NULL", dependable=True, readOnly=False) # holds the current loaded score SINGLETON OBJECT
+        TDF.createProperty(
+            self, "Score", value="NULL", dependable=True, readOnly=False
+        )  # holds the current loaded score SINGLETON OBJECT
 
     def validState(self, state):
         """
@@ -73,23 +78,20 @@ class StateExt:
         else:
             op.LOG.Log(f"StateExt: No handler for state {new_state}")
 
-    def _handle_Reset(self):
-        """
-        Reset the system to the initial state.
-        """
-        self.State = SystemState.NULL.value
-        self.Score = "NULL"
-        self.MidiMap = "NULL"
-        op.STARTUP.Startup()
-        op.LOG.Log("StateExt: System reset to NULL state")
-
     def _handle_startup(self):
-        self.State = SystemState.INIT.value
+        me.time.play = 0
+        me.time.frame = 0
+        try:
+            op.SETTINGS.InitializeSettings()
+        except Exception as e:
+            op.LOG.Log(f"++++ initialization error: {e} ++++")
         op.CONTROLPANEL.OpenControlPanel()
+        self.State = SystemState.INIT.value
         op.LOG.Log("StateExt: Initialized to INIT")
 
     def _handle_load(self):
         self.State = SystemState.QUEUED.value
+        debug("loaded")
         # op.WINDOW.OpenWindow(2)
         op.LOG.Log("StateExt: transitioned to QUEUED")
 
@@ -109,38 +111,37 @@ class StateExt:
         self.State = SystemState.ERROR.value
         op.LOG.Log("StateExt: Initialized to STOPPED")
 
-    # refactor below into _handle_init
-    def Handleloadbutton(self):
-        # get the score file path from the CONTROLPANEL
-        scoreFileBrowserOp = op.scoreFileBrowser
+    # # refactor below into _handle_init
+    # def Handleloadbutton(self):
+    #     # get the score file path from the CONTROLPANEL
+    #     scoreFileBrowserOp = op.scoreFileBrowser
 
-        # get the score object from SCOREMGR
-        try:
-            filePath = scoreFileBrowserOp.par.Value0.eval()
-            self.Score = op.SCOREMGR.LoadScore(filePath)
-        except Exception as e:
-            debug(f"Error loading score from file browser: {e}")
-            return
+    #     # get the score object from SCOREMGR
+    #     try:
+    #         filePath = scoreFileBrowserOp.par.Value0.eval()
+    #         self.Score = op.SCOREMGR.LoadScore(filePath)
+    #     except Exception as e:
+    #         debug(f"Error loading score from file browser: {e}")
+    #         return
 
-        debug(f"Loaded {filePath} score from file browser")
+    #     debug(f"Loaded {filePath} score from file browser")
 
-        # configure the current section
-        sectionName = self.Score.GetSectionName(0)
-        scorePath = self.Score.GetPath()
-        videoFolder = self.Score.GetSectionVideoFolder(0)
+    #     # configure the current section
+    #     sectionName = self.Score.GetSectionName(0)
+    #     scorePath = self.Score.GetPath()
+    #     videoFolder = self.Score.GetSectionVideoFolder(0)
 
-        #set section display
-        op.dispThisSection.par.text = self.Score.GetCurrentSectionIndex()
-        op.dispLastSection.par.text = self.Score.GetLastSectionIndex()
+    #     #set section display
+    #     op.dispThisSection.par.text = self.Score.GetCurrentSectionIndex()
+    #     op.dispLastSection.par.text = self.Score.GetLastSectionIndex()
 
-        # generate video Library
+    #     # generate video Library
 
-        # debug(f"Initial Section: {sectionName}")
-        # debug(f"Initial Path: {scorePath}")
-        # debug(f"Initial video folder: {videoFolder}")
+    #     # debug(f"Initial Section: {sectionName}")
+    #     # debug(f"Initial Path: {scorePath}")
+    #     # debug(f"Initial video folder: {videoFolder}")
 
-        # op.VIDEOLIBRARY
-        # debug(f"STATE.Score midi map:{self.Score.MidiMap}")
-        # debug(f"STATE.Score Sections:{self.Score.Sections}")
-        # debug(f"STATE.Score Section 1:{self.Score.GetSection(0)}")
-        
+    #     # op.VIDEOLIBRARY
+    #     # debug(f"STATE.Score midi map:{self.Score.MidiMap}")
+    #     # debug(f"STATE.Score Sections:{self.Score.Sections}")
+    #     # debug(f"STATE.Score Section 1:{self.Score.GetSection(0)}")
