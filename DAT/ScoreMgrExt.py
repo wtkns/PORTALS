@@ -65,7 +65,7 @@ class Score:
 
 class ScoreMgrExt:
     """
-    SCOREMGR is a manager for handling score loading and playback.
+    op.SCOREMGR is a manager for handling score loading and playback.
     Score is an object instantiated in STATE (op.STATE.Score)
     that holds the current loaded score.
     """

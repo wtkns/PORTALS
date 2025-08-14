@@ -16,6 +16,7 @@ class SystemState(Enum):
     QUEUED = "QUEUED" # Score is loaded, MIDI, Video Library, and Output Window are ready.
     RUNNING = "RUNNING" # System is actively processing.
     PAUSED = "PAUSED" # System is paused, can resume or stop.
+    STOPPED = "STOPPED" # System Stopped.
     ERROR = "ERROR" # System is in an Error State
 
 
@@ -40,10 +41,7 @@ class StateExt:
 
         # properties
         TDF.createProperty(self, "State", value="NULL", dependable=True, readOnly=False)
-        TDF.createProperty(self, "MidiMap", value="NULL", dependable=True, readOnly=False) # holds the current loaded midi map SINGLETON OBJECT
         TDF.createProperty(self, "Score", value="NULL", dependable=True, readOnly=False) # holds the current loaded score SINGLETON OBJECT
-
-
 
     def validState(self, state):
         """
@@ -75,15 +73,15 @@ class StateExt:
         else:
             op.LOG.Log(f"StateExt: No handler for state {new_state}")
 
-    # def _handle_Reset(self):
-    #     """
-    #     Reset the system to the initial state.
-    #     """
-    #     self.State = SystemState.NULL.value
-    #     self.Score = "NULL"
-    #     self.MidiMap = "NULL"
-    #     op.STARTUP.Startup()
-    #     op.LOG.Log("StateExt: System reset to NULL state")
+    def _handle_Reset(self):
+        """
+        Reset the system to the initial state.
+        """
+        self.State = SystemState.NULL.value
+        self.Score = "NULL"
+        self.MidiMap = "NULL"
+        op.STARTUP.Startup()
+        op.LOG.Log("StateExt: System reset to NULL state")
 
     def _handle_startup(self):
         self.State = SystemState.INIT.value
@@ -145,3 +143,4 @@ class StateExt:
         # debug(f"STATE.Score midi map:{self.Score.MidiMap}")
         # debug(f"STATE.Score Sections:{self.Score.Sections}")
         # debug(f"STATE.Score Section 1:{self.Score.GetSection(0)}")
+        

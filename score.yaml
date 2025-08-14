@@ -8,27 +8,31 @@ config:
   # MIDI Note<>Name mapping
   midi_map:
     - trigger_name: clock
-      midi_device: "LoopBE1"
+      midi_device: LoopBE1
       midi_channel: 14
       Tr01: ch14n37 # C1 (kick on DM)
 
     - trigger_name: section
-      midi_device: "LoopBE1"
+      midi_device: LoopBE1
       midi_channel: 14
       Tr01: ch14n38 # C#1 (snare on DM)
 
 sections:
   - name: Intro
     video_folder: 01_Intro
-      trigger_name: clock
+    events:  
+      - event_name: shuffle vertical
+        trigger_name: clock
         target: videoplayer
         channel: random
         effect: random_video
 
-      trigger_name: clock
-        target: background
-        channel: transform1
-        effect: random_color
+      - event_name: shuffle background
+        trigger_name: clock
+        target: videoplayer
+        channel: random
+        effect: random_video
+
 
   - name: Section A
     video_folder: 02_Section_A
