@@ -444,4 +444,14 @@ refactor/fix to store SCORE singleton in STATE
 
 ## 8/9: layout panel
 
-- need to rewrite handler code to receive from all children
+- updated controller panelExec to pass control panel name
+- added method to load score in ControlPanel Extension.
+- changed name of op.SCORE to op.SCOREMGR to avoid confusion
+- rename panels for sorting order
+- updated control panel scoreFileBrowser with shortcut
+
+## 8/13: 
+- added Score.GetSectionVideoFolder(index)
+- added display for sections, moved load button logic to STATE
+- set section display on loading a score
+- updated minimal testing score with additional sections
