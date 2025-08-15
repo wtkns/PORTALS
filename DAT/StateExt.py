@@ -3,7 +3,6 @@
 
 from TDStoreTools import StorageManager
 import TDFunctions as TDF
-
 from enum import Enum
 
 
@@ -14,7 +13,9 @@ class SystemState(Enum):
 
     NULL = "NULL"  # System is not initialized
     INIT = "INIT"  # Initialized system, ready to LOAD SCORE.
-    QUEUED = "QUEUED"  # Score is loaded, MIDI, Video Library, and Output Window are ready.
+    QUEUED = (
+        "QUEUED"  # Score is loaded, MIDI, Video Library, and Output Window are ready.
+    )
     RUNNING = "RUNNING"  # System is actively processing.
     PAUSED = "PAUSED"  # System is paused, can resume or stop.
     STOPPED = "STOPPED"  # System Stopped.
@@ -42,9 +43,14 @@ class StateExt:
 
         # properties
         TDF.createProperty(self, "State", value="NULL", dependable=True, readOnly=False)
+        TDF.createProperty(self, "Score", value="NULL", dependable=True, readOnly=False)
         TDF.createProperty(
-            self, "Score", value="NULL", dependable=True, readOnly=False
-        )  # holds the current loaded score SINGLETON OBJECT
+            self, "VideoLibrary", value="[]", dependable=True, readOnly=False
+        )
+
+        TDF.createProperty(
+            self, "CurrentSection", value="0", dependable=True, readOnly=False
+        )
 
     def validState(self, state):
         """
@@ -77,6 +83,13 @@ class StateExt:
             op.LOG.Log(f"StateExt: No handler for state {new_state}")
 
     def _handle_startup(self):
+        """
+        Initial startup routine,
+        stops and resets timeline,
+        opens control panel.
+        called by STARTUP.Startup() and
+        STATE.Reset
+        """
         me.time.play = 0
         me.time.frame = 0
         try:
@@ -88,10 +101,19 @@ class StateExt:
         op.LOG.Log("StateExt: Initialized to INIT")
 
     def _handle_load(self):
+        """
+        Routine that
+        1. loads the score,
+        2. opens the first section
+        3. prepares the video library
+        4. initalizes the MIDI listener
+        5. opens the output window
+        """
+
         # get the score file path from the CONTROLPANEL
         scoreFileBrowserOp = op.scoreFileBrowser
 
-        # get the score object from SCOREMGR
+        # get the score object from SCOREMGR.LoadScore
         try:
             filePath = scoreFileBrowserOp.par.Value0.eval()
             self.Score = op.SCOREMGR.LoadScore(filePath)
@@ -99,30 +121,50 @@ class StateExt:
             debug(f"Error loading score from file browser: {e}")
             return
 
-        debug(f"Loaded {filePath} score from file browser")
+        op.LOG.Log(f"Loaded {filePath} score from file browser")
 
-        # configure the current section
-        sectionName = self.Score.GetSectionName(0)
-        scorePath = self.Score.GetPath()
-        videoFolder = self.Score.GetSectionVideoFolder(0)
 
-        #set section display
+        videoList = [["Intro", "C:\Users\jms\Documents\PORTALS\SCORES\JEMAIN\01_Intro"],
+                     ["Section A", "C:\Users\jms\Documents\PORTALS\SCORES\JEMAIN\02_Section_A"],
+                     ["Section B", "C:\Users\jms\Documents\PORTALS\SCORES\JEMAIN\03_Section_b"],
+                     ["Outro", "C:\Users\jms\Documents\PORTALS\SCORES\JEMAIN\04_Outro"]]
+
+        # # generate video Library
+        # try:
+        #     # self.VideoLibrary = op.VIDEOLIBRARYMGR.LoadVideoLibrary(videoList)
+
+        # except Exception as e:
+        #     debug(f"Error loading video library: {e}")
+        #     return
+
+        op.LOG.Log(f"Loaded {videoList} ")
+        # op.LOG.Log(f"Loaded {self.VideoLibrary} from score")
+
+
+        # debug(f"Initial Section: {sectionName}")
+        # debug(f"Initial Path: {scorePath}")
+        # debug(f"Initial video folder: {videoFolder}")
+
+        # open the current section
+        # sectionName = self.Score.GetSectionName(0)
+        # scorePath = self.Score.GetPath()
+        # videoFolder = self.Score.GetSectionVideoFolder(0)
+
+
+        # # op.VIDEOLIBRARY
+        # debug(f"STATE.Score midi map:{self.Score.MidiMap}")
+        # debug(f"STATE.Score Sections:{self.Score.Sections}")
+        # debug(f"STATE.Score Section 1:{self.Score.GetSection(0)}")
+
+        # set section display
         op.dispThisSection.par.text = self.Score.GetCurrentSectionIndex()
         op.dispLastSection.par.text = self.Score.GetLastSectionIndex()
 
-        # generate video Library
-        debug(f"Initial Section: {sectionName}")
-        debug(f"Initial Path: {scorePath}")
-        debug(f"Initial video folder: {videoFolder}")
-
-        # op.VIDEOLIBRARY
-        debug(f"STATE.Score midi map:{self.Score.MidiMap}")
-        debug(f"STATE.Score Sections:{self.Score.Sections}")
-        debug(f"STATE.Score Section 1:{self.Score.GetSection(0)}")
-
         # Open Output window
         # op.WINDOW.OpenWindow(2)
-
+        debug(
+            f"monitor number {self.Score.Monitor}, size: {self.Score.Resolution[0]} X {self.Score.Resolution[1]}"
+        )
         self.State = SystemState.QUEUED.value
         op.LOG.Log("StateExt: transitioned to QUEUED")
 
@@ -141,4 +183,3 @@ class StateExt:
     def _handle_halt(self):
         self.State = SystemState.ERROR.value
         op.LOG.Log("StateExt: Initialized to STOPPED")
-

@@ -7,11 +7,13 @@ import os
 from moviepy.video.io.VideoFileClip import VideoFileClip
 from dataclasses import dataclass, field
 
+
 @dataclass
 class Video:
     """Represents a single video file with its metadata."""
+
     path: str
-    tag: str # The subfolder name
+    tag: str  # The subfolder name
     duration: float
     played_count: int = 0
 
@@ -21,41 +23,43 @@ class Video:
     def played(self):
         """Increments the play count for this video."""
         self.played_count += 1
-        
+
+
 class Playlist:
     """Manages a collection of Video objects from a folder."""
+
     def __init__(self, folder_path: str):
         self.folder_path = folder_path
         self.videos: list[Video] = []
         self.current_index: int = -1
-    
+
     def populate_videos(self):
         """Scans the folder and populates the video list."""
         print(f"Scanning '{self.folder_path}' for videos...")
         for subdir, _, files in os.walk(self.folder_path):
             for file in files:
                 # Simple check for common video extensions
-                if file.lower().endswith(('.mp4', '.mov', '.avi', '.mkv')):
+                if file.lower().endswith((".mp4", ".mov", ".avi", ".mkv")):
                     full_path = os.path.join(subdir, file)
                     tag = os.path.basename(subdir)
                     try:
                         # Get duration without loading the whole video into memory
                         with VideoFileClip(full_path) as clip:
                             duration = clip.duration
-                        
+
                         video_obj = Video(path=full_path, tag=tag, duration=duration)
                         self.videos.append(video_obj)
                     except Exception as e:
                         print(f"Could not process {full_path}: {e}")
-        
-        random.shuffle(self.videos) # Start with a random order
+
+        random.shuffle(self.videos)  # Start with a random order
         print(f"Found {len(self.videos)} videos.")
-    
+
     def get_next_video(self) -> Video | None:
         """Gets the next video in the shuffled list, looping back to the start."""
         if not self.videos:
             return None
-        
+
         self.current_index = (self.current_index + 1) % len(self.videos)
         video = self.videos[self.current_index]
         video.played()
@@ -72,13 +76,13 @@ class Playlist:
                 v.played_count = 0
             unplayed = self.videos
 
-        if not unplayed: # Still no videos
+        if not unplayed:  # Still no videos
             return None
 
         video = random.choice(unplayed)
         video.played()
         return video
-        
+
 
 class VideoLibraryExt:
     """
@@ -89,16 +93,17 @@ class VideoLibraryExt:
     def __init__(self, ownerComp):
         # The component to which this extension is attached
         self.ownerComp = ownerComp
-        self.fileList = op('file_list')
-        
+        self.fileList = op("file_list")
+
     def LoadVideos(self, root_path):
         """Load videos from the specified root path."""
         my_playlist = self.VideoPlaylist
         my_playlist.populate_videos()
         self.FileCount = my_playlist.get_video_count()
-        op.LOG.Log(f'VideoLibrary: Loaded {self.FileCount} videos from {my_playlist.folder_path}')
+        op.LOG.Log(
+            f"VideoLibrary: Loaded {self.FileCount} videos from {my_playlist.folder_path}"
+        )
 
-        
     def GetRandomVideo(self):
         # op.VIDEOLIBRARY.GetRandomVideo()
         my_playlist = self.VideoPlaylist
@@ -115,4 +120,3 @@ class VideoLibraryExt:
         # op.VIDEOLIBRARY.GetVideoCount()
         my_playlist = self.VideoPlaylist
         return len(my_playlist.videos)
-

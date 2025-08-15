@@ -14,6 +14,8 @@ class Score:
                 raise ValueError("YAML file is empty or invalid")
             self.Config = data.get('config', {})
             self.Path = self.Config.get('root_path', yaml_path)
+            self.Resolution = self.Config.get('output_resolution', [])
+            self.Monitor = self.Config.get('monitor_number', 0)
             self.Sections = data.get('sections', [])
             self.MidiMap = data.get('midi_map', {})
             self.CurrentSectionIndex = 0
