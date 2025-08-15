@@ -124,21 +124,20 @@ class StateExt:
         op.LOG.Log(f"Loaded {filePath} score from file browser")
 
 
-        videoList = [["Intro", "C:\Users\jms\Documents\PORTALS\SCORES\JEMAIN\01_Intro"],
-                     ["Section A", "C:\Users\jms\Documents\PORTALS\SCORES\JEMAIN\02_Section_A"],
-                     ["Section B", "C:\Users\jms\Documents\PORTALS\SCORES\JEMAIN\03_Section_b"],
-                     ["Outro", "C:\Users\jms\Documents\PORTALS\SCORES\JEMAIN\04_Outro"]]
+        # videoList = [["Intro","C:\Users\jms\Documents\PORTALS\SCORES\JEMAIN\01_Intro"],["Section A", "C:\Users\jms\Documents\PORTALS\SCORES\JEMAIN\02_Section_A"],["Section B", "C:\Users\jms\Documents\PORTALS\SCORES\JEMAIN\03_Section_b"],["Outro", "C:\Users\jms\Documents\PORTALS\SCORES\JEMAIN\04_Outro"]]
+        videoList =[["test-intro", "test-intro-path"], ["test-section A", "test-section A path"], 
+                    ["test-section B", "test-section B path"],["test-outro", "test-outro-path"]]
 
-        # # generate video Library
-        # try:
-        #     # self.VideoLibrary = op.VIDEOLIBRARYMGR.LoadVideoLibrary(videoList)
+        # generate video Library
+        try:
+            self.VideoLibrary = op.VIDEOLIBRARYMGR.LoadVideoLibrary(videoList)
 
-        # except Exception as e:
-        #     debug(f"Error loading video library: {e}")
-        #     return
+        except Exception as e:
+            debug(f"Error loading video library: {e}")
+            return
 
         op.LOG.Log(f"Loaded {videoList} ")
-        # op.LOG.Log(f"Loaded {self.VideoLibrary} from score")
+        op.LOG.Log(f"Loaded {self.VideoLibrary} from score")
 
 
         # debug(f"Initial Section: {sectionName}")
