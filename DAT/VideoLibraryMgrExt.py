@@ -6,6 +6,28 @@ import random
 import os
 from moviepy.video.io.VideoFileClip import VideoFileClip
 from dataclasses import dataclass, field
+
+
+class Video:
+    def __init__(self, videoPath):
+
+        f = fileFrom(videoPath)
+
+        metadata = {
+            "playcount": 0,
+            "length": getLength(f),
+            "resolution": getResolution(f),
+            "tags": []
+        }
+        return [path, metadata]
+    
+    def getLength(self, file):
+        # get length of video from file
+        return videoLength
+    
+    def getResolution(self, file)
+        # get resolution of video from file
+        return [xResolution, yResolution]
         
 class VideoLibrary:
     """Manages a collection of Video objects from a folder."""
@@ -15,9 +37,14 @@ class VideoLibrary:
     def LoadSection(section):
         debug(f"Loading section: {section}")
     
-    def RandomVideo(section):
+    def getRandomVideo(section):
         debug(f"return random video path from {section}")
 
+    def getUnplayedVideo(section):
+        debug(f"return random video path from {section}")
+
+    def getRandomTaggedVideo(section):
+        debug(f"return random video path from {section}")
 
 class VideoLibraryMgrExt:
     """

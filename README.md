@@ -497,4 +497,5 @@ VideoLibrary: [video, video, ...]
   .getNextVideo
   .getRandomVideo
   .getUnplayedVideo
+  .getRandomTaggedVideo
   
