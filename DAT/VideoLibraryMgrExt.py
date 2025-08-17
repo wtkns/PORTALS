@@ -12,6 +12,9 @@ class VideoLibrary:
     def __init__(self, sectionList):
         self.SectionList = sectionList
     
+    def LoadSection(section)
+        debug(f"Loading section: {section}")
+    
 
 class VideoLibraryMgrExt:
     """

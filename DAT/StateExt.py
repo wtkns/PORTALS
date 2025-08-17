@@ -136,26 +136,7 @@ class StateExt:
             return
 
         op.LOG.Log(f"Loaded {self.SessionVideoLibrary} from score")
-        debug(f"Loaded {self.SessionVideoLibrary} from score")
-
-        for sublist in self.SessionVideoLibrary.SectionList:
-            debug(*sublist) 
-
-        # debug(f"Initial Section: {sectionName}")
-        # debug(f"Initial Path: {scorePath}")
-        # debug(f"Initial video folder: {videoFolder}")
-
-        # open the current section
-        # sectionName = self.SessionScore.GetSectionName(0)
-        # scorePath = self.SessionScore.GetPath()
-        # videoFolder = self.SessionScore.GetSectionVideoFolder(0)
-
-
-        # # op.VIDEOLIBRARY
-        # debug(f"STATE.SessionScore midi map:{self.SessionScore.MidiMap}")
-        # debug(f"STATE.SessionScore Sections:{self.SessionScore.Sections}")
-        # debug(f"STATE.SessionScore Section 1:{self.SessionScore.GetSection(0)}")
-
+ 
         # set section display
         op.dispThisSection.par.text = self.SessionScore.GetCurrentSectionIndex()
         op.dispLastSection.par.text = self.SessionScore.GetLastSectionIndex()
