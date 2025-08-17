@@ -32,7 +32,8 @@ class Video:
 class VideoLibrary:
     """Manages a collection of Video objects from a folder."""
     def __init__(self, sectionList):
-        self.SectionList = sectionList
+        for section in sectionList:
+
 
     def LoadSection(section):
         debug(f"Loading section: {section}")

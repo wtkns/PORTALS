@@ -493,9 +493,14 @@ video: [FilePath, metadata{}]
   .getLength
   .getResolution
 
-VideoLibrary: [video, video, ...]
+section: [video, video, ...]
+
+videoLibrary: [ section section, ...]
   .getNextVideo
   .getRandomVideo
   .getUnplayedVideo
   .getRandomTaggedVideo
-  
+
+
+next: Add sections stubs
+
