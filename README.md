@@ -474,3 +474,27 @@ refactor/fix to store SCORE singleton in STATE
             SystemState.PAUSED: self._handle_pause,
             SystemState.STOPPED: self._handle_stop,
             SystemState.ERROR: self._handle_halt
+
+## 8/17:
+- load initializes:
+  - ScoreMGR loads YAML file into State.SessionScore:
+      - .Config: {}
+      - .Path: path STR
+      - .Sections  
+
+metadata:
+  {playcount,
+   length,
+   resolution,
+   tags: [] }
+
+video: [FilePath, metadata{}]
+  .incrementPlaycount
+  .getLength
+  .getResolution
+
+VideoLibrary: [video, video, ...]
+  .getNextVideo
+  .getRandomVideo
+  .getUnplayedVideo
+  
