@@ -12,9 +12,12 @@ class VideoLibrary:
     def __init__(self, sectionList):
         self.SectionList = sectionList
     
-    def LoadSection(section)
+    def LoadSection(section):
         debug(f"Loading section: {section}")
     
+    def RandomVideo(section):
+        debug("return random video path from {section}")
+
 
 class VideoLibraryMgrExt:
     """
