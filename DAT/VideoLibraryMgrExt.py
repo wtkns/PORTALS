@@ -16,7 +16,7 @@ class VideoLibrary:
         debug(f"Loading section: {section}")
     
     def RandomVideo(section):
-        debug("return random video path from {section}")
+        debug(f"return random video path from {section}")
 
 
 class VideoLibraryMgrExt:
