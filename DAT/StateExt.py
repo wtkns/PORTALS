@@ -42,14 +42,14 @@ class StateExt:
         }
 
         # properties
-        TDF.createProperty(self, "State", value="NULL", dependable=True, readOnly=False)
-        TDF.createProperty(self, "Score", value="NULL", dependable=True, readOnly=False)
+        TDF.createProperty(self, "SessionState", value="NULL", dependable=True, readOnly=False)
+        TDF.createProperty(self, "SessionScore", value="NULL", dependable=True, readOnly=False)
         TDF.createProperty(
-            self, "VideoLibrary", value="[]", dependable=True, readOnly=False
+            self, "SessionVideoLibrary", value="[]", dependable=True, readOnly=False
         )
 
         TDF.createProperty(
-            self, "CurrentSection", value="0", dependable=True, readOnly=False
+            self, "SessionCurrentSection", value="0", dependable=True, readOnly=False
         )
 
     def validState(self, state):
@@ -62,7 +62,7 @@ class StateExt:
         """
         returns the current state of the system.
         """
-        return self.State
+        return self.SessionState
 
     def SetState(self, new_state):
         """
@@ -97,8 +97,8 @@ class StateExt:
         except Exception as e:
             op.LOG.Log(f"++++ initialization error: {e} ++++")
         op.CONTROLPANEL.OpenControlPanel()
-        self.State = SystemState.INIT.value
-        op.LOG.Log("StateExt: Initialized to INIT")
+        self.SessionState = SystemState.INIT.value
+        op.LOG.Log("SessionState: Initialized to INIT")
 
     def _handle_load(self):
         """
@@ -116,69 +116,69 @@ class StateExt:
         # get the score object from SCOREMGR.LoadScore
         try:
             filePath = scoreFileBrowserOp.par.Value0.eval()
-            self.Score = op.SCOREMGR.LoadScore(filePath)
+            self.SessionScore = op.SCOREMGR.LoadScore(filePath)
         except Exception as e:
             debug(f"Error loading score from file browser: {e}")
             return
 
         op.LOG.Log(f"Loaded {filePath} score from file browser")
 
-
-        # videoList = [["Intro","C:\Users\jms\Documents\PORTALS\SCORES\JEMAIN\01_Intro"],["Section A", "C:\Users\jms\Documents\PORTALS\SCORES\JEMAIN\02_Section_A"],["Section B", "C:\Users\jms\Documents\PORTALS\SCORES\JEMAIN\03_Section_b"],["Outro", "C:\Users\jms\Documents\PORTALS\SCORES\JEMAIN\04_Outro"]]
-        videoList =[["test-intro", "test-intro-path"], ["test-section A", "test-section A path"], 
-                    ["test-section B", "test-section B path"],["test-outro", "test-outro-path"]]
+        # get structured list of section names and paths for all videos for all sections
+        # like: [["test-intro", "test-intro-path"], ["test-section A", "test-section A path"]]
+        scoreLibraryList = self.SessionScore.GetLibraryList()
 
         # generate video Library
         try:
-            self.VideoLibrary = op.VIDEOLIBRARYMGR.LoadVideoLibrary(videoList)
+            self.VideoLibrary = op.VIDEOLIBRARYMGR.LoadVideoLibrary(scoreLibraryList)
 
         except Exception as e:
             debug(f"Error loading video library: {e}")
             return
 
-        op.LOG.Log(f"Loaded {videoList} ")
         op.LOG.Log(f"Loaded {self.VideoLibrary} from score")
-
+        debug(f"Loaded {self.VideoLibrary} from score")
+        for sublist in self.VideoLibrary:
+            debug(*sublist) 
 
         # debug(f"Initial Section: {sectionName}")
         # debug(f"Initial Path: {scorePath}")
         # debug(f"Initial video folder: {videoFolder}")
 
         # open the current section
-        # sectionName = self.Score.GetSectionName(0)
-        # scorePath = self.Score.GetPath()
-        # videoFolder = self.Score.GetSectionVideoFolder(0)
+        # sectionName = self.SessionScore.GetSectionName(0)
+        # scorePath = self.SessionScore.GetPath()
+        # videoFolder = self.SessionScore.GetSectionVideoFolder(0)
 
 
         # # op.VIDEOLIBRARY
-        # debug(f"STATE.Score midi map:{self.Score.MidiMap}")
-        # debug(f"STATE.Score Sections:{self.Score.Sections}")
-        # debug(f"STATE.Score Section 1:{self.Score.GetSection(0)}")
+        # debug(f"STATE.SessionScore midi map:{self.SessionScore.MidiMap}")
+        # debug(f"STATE.SessionScore Sections:{self.SessionScore.Sections}")
+        # debug(f"STATE.SessionScore Section 1:{self.SessionScore.GetSection(0)}")
 
         # set section display
-        op.dispThisSection.par.text = self.Score.GetCurrentSectionIndex()
-        op.dispLastSection.par.text = self.Score.GetLastSectionIndex()
+        op.dispThisSection.par.text = self.SessionScore.GetCurrentSectionIndex()
+        op.dispLastSection.par.text = self.SessionScore.GetLastSectionIndex()
 
         # Open Output window
         # op.WINDOW.OpenWindow(2)
-        debug(
-            f"monitor number {self.Score.Monitor}, size: {self.Score.Resolution[0]} X {self.Score.Resolution[1]}"
+        op.LOG.Log(
+            f"OPENING WINDOW: monitor number {self.SessionScore.Monitor}, size: {self.SessionScore.Resolution[0]} X {self.SessionScore.Resolution[1]}"
         )
-        self.State = SystemState.QUEUED.value
-        op.LOG.Log("StateExt: transitioned to QUEUED")
+        self.SessionState = SystemState.QUEUED.value
+        op.LOG.Log("SessionState: transitioned to QUEUED")
 
     def _handle_play(self):
-        self.State = SystemState.RUNNING.value
-        op.LOG.Log("StateExt: transitioned to READY")
+        self.SessionState = SystemState.RUNNING.value
+        op.LOG.Log("SessionState: transitioned to READY")
 
     def _handle_pause(self):
-        self.State = SystemState.PAUSED.value
-        op.LOG.Log("StateExt: transitioned to RUNNING")
+        self.SessionState = SystemState.PAUSED.value
+        op.LOG.Log("SessionState: transitioned to RUNNING")
 
     def _handle_stop(self):
-        self.State = SystemState.QUEUED.value
-        op.LOG.Log("StateExt: transitioned to QUEUED")
+        self.SessionState = SystemState.QUEUED.value
+        op.LOG.Log("SessionState: transitioned to QUEUED")
 
     def _handle_halt(self):
-        self.State = SystemState.ERROR.value
-        op.LOG.Log("StateExt: Initialized to STOPPED")
+        self.SessionState = SystemState.ERROR.value
+        op.LOG.Log("SessionState: Initialized to STOPPED")

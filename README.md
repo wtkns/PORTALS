@@ -424,8 +424,8 @@ pattern_sections:
 ### Next Time
 
 - CONTROLPANEL.HandleLoadButton call sets CONTROLPANEL.ScorePath
-- CONTROLPANEL.HandleLoadButton updates STATE.State to STARTUP
-- STATE.handleSetState("STARTUP") creates STATE.Score with SCORE.LoadScore(ScorePath):returns Score object
+- CONTROLPANEL.HandleLoadButton updates STATE.SessionState to STARTUP
+- STATE.handleSetState("STARTUP") creates STATE.SessionScore with SCORE.LoadScore(ScorePath):returns Score object
 
 refactor/fix to store SCORE singleton in STATE
 
@@ -434,7 +434,7 @@ refactor/fix to store SCORE singleton in STATE
 ## 8/5
 
 - added bitwig project for clock
-- refactored ScoreExt to return a Score object which is held by STATE.Score
+- refactored ScoreExt to return a Score object which is held by STATE.SessionScore
 - refactored STATE to use Enums and individual handlers
 
 ### Next

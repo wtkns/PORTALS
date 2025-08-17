@@ -65,10 +65,22 @@ class Score:
         """
         return len(self.Sections)
 
+    def GetLibrarySectionList(self, index):
+        return [self.GetSectionName(index), self.GetSectionVideoFolder(index)]
+
+
+    def GetLibraryList(self):
+        # videoList = [["Intro","C:\Users\jms\Documents\PORTALS\SCORES\JEMAIN\01_Intro"],["Section A", "C:\Users\jms\Documents\PORTALS\SCORES\JEMAIN\02_Section_A"],["Section B", "C:\Users\jms\Documents\PORTALS\SCORES\JEMAIN\03_Section_b"],["Outro", "C:\Users\jms\Documents\PORTALS\SCORES\JEMAIN\04_Outro"]]
+        # videoList =[["test-intro", "test-intro-path"], ["test-section A", "test-section A path"], 
+        #             ["test-section B", "test-section B path"],["test-outro", "test-outro-path"]]
+
+        # for section in self.Sections
+        return self.GetLibrarySectionList(0)
+
 class ScoreMgrExt:
     """
     op.SCOREMGR is a manager for handling score loading and playback.
-    Score is an object instantiated in STATE (op.STATE.Score)
+    Score is an object instantiated in STATE (op.STATE.SessionScore)
     that holds the current loaded score.
     """
     def __init__(self, ownerComp):
