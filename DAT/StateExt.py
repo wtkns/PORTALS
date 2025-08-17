@@ -137,7 +137,8 @@ class StateExt:
 
         op.LOG.Log(f"Loaded {self.SessionVideoLibrary} from score")
         debug(f"Loaded {self.SessionVideoLibrary} from score")
-        for sublist in self.SessionVideoLibrary:
+
+        for sublist in self.SessionVideoLibrary.SectionList:
             debug(*sublist) 
 
         # debug(f"Initial Section: {sectionName}")
