@@ -7,15 +7,15 @@ import yaml
 import os
 
 class Score:
-    def __init__(self, yaml_path):
-        with open(yaml_path, 'r') as file:
+    def __init__(self, scorePath):
+        with open(scorePath, 'r') as file:
             data = yaml.load(file, Loader=yaml.FullLoader)
             if not data:
                 raise ValueError("YAML file is empty or invalid")
             self.Config = data.get('config', {})
 
             # REFACTOR BACK INTO Config
-            self.Path = self.Config.get('root_path', yaml_path)
+            self.Path = os.path.join(op.SETTINGS.AssetPath, self.Config.get('root', "")) #self.Config.get('root', scorePath)
             self.Resolution = self.Config.get('output_resolution', [])
             self.Monitor = self.Config.get('monitor_number', 0)
 
