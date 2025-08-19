@@ -111,12 +111,13 @@ class StateExt:
         """
 
         # get the score file path from the CONTROLPANEL
-        scoreFileBrowserOp = op.scoreFileBrowser
+        # scoreFileBrowserOp = op.scoreFileBrowser
 
         # get the score object from SCOREMGR.LoadScore
         try:
-            filePath = scoreFileBrowserOp.par.Value0.eval()
+            filePath = op.scoreFileBrowser.par.Value0.eval()
             self.SessionScore = op.SCOREMGR.LoadScore(filePath)
+
         except Exception as e:
             debug(f"Error loading score from file browser: {e}")
             return
@@ -127,27 +128,32 @@ class StateExt:
         # like: [["test-intro", "test-intro-path"], ["test-section A", "test-section A path"]]
         scoreLibraryList = self.SessionScore.GetLibraryList()
 
+        debug(f"ScoreLibraryList: {scoreLibraryList}")
+
         # generate video Library
         try:
             self.SessionVideoLibrary = op.VIDEOLIBRARYMGR.LoadVideoLibrary(scoreLibraryList)
+            debug(self.SessionVideoLibrary)
 
         except Exception as e:
             debug(f"Error loading video library: {e}")
             return
 
-        op.LOG.Log(f"Loaded {self.SessionVideoLibrary} from score")
- 
-        # set section display
-        op.dispThisSection.par.text = self.SessionScore.GetCurrentSectionIndex()
-        op.dispLastSection.par.text = self.SessionScore.GetLastSectionIndex()
+        debug(self.SessionVideoLibrary.Library)
 
-        # Open Output window
-        # op.WINDOW.OpenWindow(2)
-        op.LOG.Log(
-            f"OPENING WINDOW: monitor number {self.SessionScore.Monitor}, size: {self.SessionScore.Resolution[0]} X {self.SessionScore.Resolution[1]}"
-        )
-        self.SessionState = SystemState.QUEUED.value
-        op.LOG.Log("SessionState: transitioned to QUEUED")
+        # op.LOG.Log(f"Loaded {self.SessionVideoLibrary} from score")
+ 
+        # # set section display
+        # op.CONTROLPANEL.SetCurrentSectionDisplay(self.SessionScore.GetCurrentSectionIndex())
+        # op.CONTROLPANEL.SetScoreLengthDisplay(self.SessionScore.GetLastSectionIndex())
+
+        # # Open Output window
+        # # op.WINDOW.OpenWindow(2)
+        # op.LOG.Log(
+        #     f"OPENING WINDOW: monitor number {self.SessionScore.Monitor}, size: {self.SessionScore.Resolution[0]} X {self.SessionScore.Resolution[1]}"
+        # )
+        # self.SessionState = SystemState.QUEUED.value
+        # op.LOG.Log("SessionState: transitioned to QUEUED")
 
     def _handle_play(self):
         self.SessionState = SystemState.RUNNING.value

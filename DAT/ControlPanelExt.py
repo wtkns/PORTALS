@@ -90,12 +90,12 @@ class ControlPanelExt:
         """
         Set the current section display.
         """
-        # self.sectionDisplay.par.Value0 = sectionNumber
+        op.dispThisSection.par.text = sectionNumber
         op.LOG.Log(f"Set current section display to {sectionNumber}")
 
     def SetScoreLengthDisplay(self, scoreLength):
         """
         Set the score length display.
         """
-        # self.sectionDisplay.par.Value1 = scoreLength
+        op.dispLastSection.par.text = scoreLength
         op.LOG.Log(f"Set score length display to {scoreLength}")

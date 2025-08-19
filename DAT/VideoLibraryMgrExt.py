@@ -11,29 +11,39 @@ from dataclasses import dataclass, field
 class Video:
     def __init__(self, videoPath):
 
-        f = fileFrom(videoPath)
+        f = "" # fileFrom(videoPath)
 
-        metadata = {
+        video = {
+            "path": videoPath,
             "playcount": 0,
-            "length": getLength(f),
-            "resolution": getResolution(f),
+            "length": 0, #getLength(f),
+            "resolution": self.GetResolution(f),
             "tags": []
         }
-        return [path, metadata]
     
-    def getLength(self, file):
+    def GetLength(self, file):
         # get length of video from file
+        videoLength = 0
         return videoLength
-    
-    def getResolution(self, file)
+
+    def GetResolution(self, file):
         # get resolution of video from file
+        xResolution = 1920 
+        yResolution = 1080
         return [xResolution, yResolution]
         
 class VideoLibrary:
     """Manages a collection of Video objects from a folder."""
     def __init__(self, sectionList):
-        for section in sectionList:
+        self.Library = []
+        debug("creating video library")
 
+        for section in sectionList:
+            sectionName = section[0]
+            sectionVideoPath = section[1]
+            videoList = op.VIDEOLIBRARYMGR.GetVideoList(sectionVideoPath)
+
+            self.Library.append([sectionName, videoList])
 
     def LoadSection(section):
         debug(f"Loading section: {section}")
@@ -56,12 +66,20 @@ class VideoLibraryMgrExt:
         # The component to which this extension is attached
         self.ownerComp = ownerComp
 
-    def LoadVideoLibrary(self, section_list):
+    def LoadVideoLibrary(self, sectionList):
         """
         interface that generates a video Library
         from a list of section names and folders.
         """
-        # error checking
-        #    return 0
+        debug(f"loading video library {sectionList}")
+        return VideoLibrary(sectionList)
 
-        return VideoLibrary(section_list)
+    def GetVideoList(self, folderPath):
+        debug(f"generating video file list for section {folderPath}")
+        videoList = []
+        files = os.listdir(folderPath)
+        for file in files:
+            debug(f"file name: {file}")
+            videoList.append({"path": file, "playedcount": 0, "tags": ["tag1","tag2"]})
+
+        return videoList
