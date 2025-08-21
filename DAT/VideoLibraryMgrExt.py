@@ -11,26 +11,30 @@ from dataclasses import dataclass, field
 class Video:
     def __init__(self, videoPath):
 
-        f = "" # fileFrom(videoPath)
+        f = "" # STUB:  fileFrom(videoPath)
 
         video = {
             "path": videoPath,
             "playcount": 0,
-            "length": 0, #getLength(f),
+            "length": self.GetLength(f),
             "resolution": self.GetResolution(f),
-            "tags": []
+            "tags": self.GetTags(f)
         }
     
     def GetLength(self, file):
-        # get length of video from file
+        #STUB:  get length of video from file
         videoLength = 0
         return videoLength
 
     def GetResolution(self, file):
-        # get resolution of video from file
+        #STUB:  get resolution of video from file
         xResolution = 1920 
         yResolution = 1080
         return [xResolution, yResolution]
+    
+    def GetTags(self, file):
+        #STUB:  get tags from somewhere metadata? another YAML file?
+        return ["abstract", "crystal"]
         
 class VideoLibrary:
     """Manages a collection of Video objects from a folder."""
@@ -46,16 +50,16 @@ class VideoLibrary:
             self.Library.append([sectionName, videoList])
 
     def LoadSection(section):
-        debug(f"Loading section: {section}")
+        debug(f"STUB: Loading section: {section}")
     
     def getRandomVideo(section):
-        debug(f"return random video path from {section}")
+        debug(f"STUB: return random video path from {section}")
 
     def getUnplayedVideo(section):
-        debug(f"return random video path from {section}")
+        debug(f"STUB: return random video path from {section}")
 
     def getRandomTaggedVideo(section):
-        debug(f"return random video path from {section}")
+        debug(f"STUB: return random video path from {section}")
 
 class VideoLibraryMgrExt:
     """
