@@ -10,31 +10,17 @@ from dataclasses import dataclass, field
 
 class Video:
     def __init__(self, videoPath):
-
-        f = "" # STUB:  fileFrom(videoPath)
-
         video = {
             "path": videoPath,
             "playcount": 0,
-            "length": self.GetLength(f),
-            "resolution": self.GetResolution(f),
-            "tags": self.GetTags(f)
+            "duration": op.VIDEOLIBRARYMGR.GetDuration(videoPath),
+            "resolution": op.VIDEOLIBRARYMGR.GetResolution(videoPath),
+            "tags": op.VIDEOLIBRARYMGR.GetTags(videoPath)
         }
-    
-    def GetLength(self, file):
-        #STUB:  get length of video from file
-        videoLength = 0
-        return videoLength
 
-    def GetResolution(self, file):
-        #STUB:  get resolution of video from file
-        xResolution = 1920 
-        yResolution = 1080
-        return [xResolution, yResolution]
-    
-    def GetTags(self, file):
-        #STUB:  get tags from somewhere metadata? another YAML file?
-        return ["abstract", "crystal"]
+    def __repr__(self):
+        return f"Video (path={self.path})"
+
         
 class VideoLibrary:
     """Manages a collection of Video objects from a folder."""
@@ -60,6 +46,8 @@ class VideoLibrary:
 
     def getRandomTaggedVideo(section):
         debug(f"STUB: return random video path from {section}")
+    
+
 
 class VideoLibraryMgrExt:
     """
@@ -84,5 +72,22 @@ class VideoLibraryMgrExt:
         files = os.listdir(folderPath)
         for file in files:
             path = os.path.join(folderPath, file)
-            videoList.append({"path": path, "playedcount": 0, "tags": ["tag1","tag2"]})
+            videoList.append(Video(path))
+            # videoList.append({"path": path, "playedcount": 0, "tags": ["tag1","tag2"]})
         return videoList
+    
+    def GetDuration(self, filePath):
+        # get duration of video file from path
+        with VideoFileClip(filePath) as clip:
+                            duration = clip.duration
+        return duration
+
+    def GetResolution(self, file):
+        #STUB:  get resolution of video from file
+        xResolution = 1920 
+        yResolution = 1080
+        return [xResolution, yResolution]
+    
+    def GetTags(self, file):
+        #STUB:  get tags from somewhere metadata? another YAML file?
+        return ["abstract", "crystal"]
