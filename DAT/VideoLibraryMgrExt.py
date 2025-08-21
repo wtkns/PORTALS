@@ -75,11 +75,10 @@ class VideoLibraryMgrExt:
         return VideoLibrary(sectionList)
 
     def GetVideoList(self, folderPath):
-        debug(f"generating video file list for section {folderPath}")
+        op.LOG.Log(f"generating video file list for section {folderPath}")
         videoList = []
         files = os.listdir(folderPath)
         for file in files:
-            debug(f"file name: {file}")
-            videoList.append({"path": file, "playedcount": 0, "tags": ["tag1","tag2"]})
-
+            path = os.path.join(folderPath, file)
+            videoList.append({"path": path, "playedcount": 0, "tags": ["tag1","tag2"]})
         return videoList

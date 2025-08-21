@@ -133,15 +133,12 @@ class StateExt:
         # generate video Library
         try:
             self.SessionVideoLibrary = op.VIDEOLIBRARYMGR.LoadVideoLibrary(scoreLibraryList)
-            debug(self.SessionVideoLibrary)
 
         except Exception as e:
             debug(f"Error loading video library: {e}")
             return
 
-        debug(self.SessionVideoLibrary.Library)
-
-        # op.LOG.Log(f"Loaded {self.SessionVideoLibrary} from score")
+        op.LOG.Log(f"Loaded {self.SessionVideoLibrary.Library} from score")
  
         # # set section display
         # op.CONTROLPANEL.SetCurrentSectionDisplay(self.SessionScore.GetCurrentSectionIndex())
