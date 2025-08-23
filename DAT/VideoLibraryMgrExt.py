@@ -13,7 +13,7 @@ class Video:
 
         f = "" # fileFrom(videoPath)
 
-        video = {
+        self.Metadata = {
             "path": videoPath,
             "playcount": 0,
             "length": 0, #getLength(f),
@@ -57,6 +57,14 @@ class VideoLibrary:
     def getRandomTaggedVideo(section):
         debug(f"return random video path from {section}")
 
+    def ListVideos(self, sectionIndex):
+        debug(f"listing {len(self.Library[sectionIndex][1])} videos in {sectionIndex}")
+        for video in self.Library[sectionIndex][1]:
+            debug(video.Metadata["path"])
+
+        # debug(self.Library[sectionIndex][1])
+
+
 class VideoLibraryMgrExt:
     """
     op.VIDEOLIBRARYMGR is a manager for handling Video Library loading
@@ -79,7 +87,8 @@ class VideoLibraryMgrExt:
         videoList = []
         files = os.listdir(folderPath)
         for file in files:
-            debug(f"file name: {file}")
-            videoList.append({"path": file, "playedcount": 0, "tags": ["tag1","tag2"]})
-
+            # debug(f"file name: {file}")
+            fullPath = os.path.join(folderPath, file)
+            videoList.append(Video(fullPath))
         return videoList
+

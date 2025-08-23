@@ -139,21 +139,20 @@ class StateExt:
             debug(f"Error loading video library: {e}")
             return
 
-        debug(self.SessionVideoLibrary.Library)
-
-        # op.LOG.Log(f"Loaded {self.SessionVideoLibrary} from score")
+        op.LOG.Log(f"Loaded {self.SessionVideoLibrary.Library} from score")
  
-        # # set section display
-        # op.CONTROLPANEL.SetCurrentSectionDisplay(self.SessionScore.GetCurrentSectionIndex())
-        # op.CONTROLPANEL.SetScoreLengthDisplay(self.SessionScore.GetLastSectionIndex())
+        # set section display
+        op.CONTROLPANEL.SetCurrentSectionDisplay(self.SessionScore.GetCurrentSectionIndex())
+        op.CONTROLPANEL.SetScoreLengthDisplay(self.SessionScore.GetLastSectionIndex())
 
         # # Open Output window
         # # op.WINDOW.OpenWindow(2)
         # op.LOG.Log(
         #     f"OPENING WINDOW: monitor number {self.SessionScore.Monitor}, size: {self.SessionScore.Resolution[0]} X {self.SessionScore.Resolution[1]}"
         # )
-        # self.SessionState = SystemState.QUEUED.value
-        # op.LOG.Log("SessionState: transitioned to QUEUED")
+
+        self.SessionState = SystemState.QUEUED.value
+        op.LOG.Log("SessionState: transitioned to QUEUED")
 
     def _handle_play(self):
         self.SessionState = SystemState.RUNNING.value
