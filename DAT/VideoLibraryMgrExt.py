@@ -16,21 +16,14 @@ class Video:
         self.Metadata = {
             "path": videoPath,
             "playcount": 0,
-            "length": 0, #getLength(f),
-            "resolution": self.GetResolution(f),
-            "tags": []
+            "duration": op.VIDEOLIBRARYMGR.GetDuration(videoPath),
+            "resolution": op.VIDEOLIBRARYMGR.GetResolution(videoPath),
+            "tags": op.VIDEOLIBRARYMGR.GetTags(videoPath)
         }
-    
-    def GetLength(self, file):
-        # get length of video from file
-        videoLength = 0
-        return videoLength
 
-    def GetResolution(self, file):
-        # get resolution of video from file
-        xResolution = 1920 
-        yResolution = 1080
-        return [xResolution, yResolution]
+    def __repr__(self):
+        return f"Video (path={self.path})"
+
         
 class VideoLibrary:
     """Manages a collection of Video objects from a folder."""
@@ -46,13 +39,13 @@ class VideoLibrary:
             self.Library.append([sectionName, videoList])
 
     def LoadSection(section):
-        debug(f"Loading section: {section}")
+        debug(f"STUB: Loading section: {section}")
     
     def getRandomVideo(section):
-        debug(f"return random video path from {section}")
+        debug(f"STUB: return random video path from {section}")
 
     def getUnplayedVideo(section):
-        debug(f"return random video path from {section}")
+        debug(f"STUB: return random video path from {section}")
 
     def getRandomTaggedVideo(section):
         debug(f"return random video path from {section}")
@@ -83,7 +76,7 @@ class VideoLibraryMgrExt:
         return VideoLibrary(sectionList)
 
     def GetVideoList(self, folderPath):
-        debug(f"generating video file list for section {folderPath}")
+        op.LOG.Log(f"generating video file list for section {folderPath}")
         videoList = []
         files = os.listdir(folderPath)
         for file in files:
@@ -91,4 +84,20 @@ class VideoLibraryMgrExt:
             fullPath = os.path.join(folderPath, file)
             videoList.append(Video(fullPath))
         return videoList
+    
+    def GetDuration(self, filePath):
+        # get duration of video file from path
+        with VideoFileClip(filePath) as clip:
+                            duration = clip.duration
+        return duration
+
+    def GetResolution(self, file):
+        #STUB:  get resolution of video from file
+        xResolution = 1920 
+        yResolution = 1080
+        return [xResolution, yResolution]
+    
+    def GetTags(self, file):
+        #STUB:  get tags from somewhere metadata? another YAML file?
+        return ["abstract", "crystal"]
 
